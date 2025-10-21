@@ -140,17 +140,25 @@ export function BooksPage() {
 
       {/* Search Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Tabs value={searchType} onValueChange={(value: string) => setSearchType(value as "normal" | "ai")} className="w-full">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-4">
-            <TabsTrigger value="normal" className="flex items-center gap-2">
-              <Search className="w-4 h-4" />
-              Standard Search
-            </TabsTrigger>
-            <TabsTrigger value="ai" className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4" />
-              AI Search
-            </TabsTrigger>
-          </TabsList>
+        <div className="flex justify-center gap-2 mb-6">
+          <Button 
+            variant={searchType === "normal" ? "default" : "outline"}
+            onClick={() => setSearchType("normal")}
+            className="flex items-center gap-2"
+          >
+            <Search className="w-4 h-4" />
+            Normal Search
+          </Button>
+          <Button 
+            variant={searchType === "ai" ? "default" : "outline"}
+            onClick={() => setSearchType("ai")}
+            className="flex items-center gap-2"
+          >
+            <Sparkles className="w-4 h-4" />
+            AI Search
+          </Button>
+        </div>
+        <Tabs value={searchType} className="w-full">
           <TabsContent value="normal" className="mt-0">
             <div className="relative max-w-2xl mx-auto">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
