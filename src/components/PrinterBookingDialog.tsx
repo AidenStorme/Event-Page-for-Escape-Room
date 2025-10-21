@@ -9,6 +9,7 @@ import {
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { Badge } from "./ui/badge";
 import {
   Select,
   SelectContent,
@@ -21,17 +22,21 @@ import { Calendar } from "./ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Textarea } from "./ui/textarea";
 import { Alert, AlertDescription } from "./ui/alert";
-import { Calendar as CalendarIcon, Clock, Euro, Mail, Phone, User, AlertCircle, FileText } from "lucide-react";
+import { Calendar as CalendarIcon, Clock, Euro, Mail, Phone, User, AlertCircle, FileText, CheckCircle2 } from "lucide-react";
 import { format } from "date-fns";
+import { Printer, Filament, FilamentColor, FilamentStatus } from "./PrinterDetailPage";
 
 interface PrinterBookingDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  printer: {
-    name: string;
-    model: string;
-  } | null;
+  printer: Printer | null;
 }
+
+const filamentStatusColors: { [key in FilamentStatus]: string } = {
+  good: "bg-green-100 text-green-800 border-green-300",
+  low: "bg-yellow-100 text-yellow-800 border-yellow-300",
+  empty: "bg-red-100 text-red-800 border-red-300",
+};
 
 const timeSlots = [
   "09:00 - 11:00",
@@ -60,14 +65,18 @@ export function PrinterBookingDialog({
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
-  const [material, setMaterial] = useState("");
+  const [selectedFilamentType, setSelectedFilamentType] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
 
   if (!printer) return null;
+
+  const selectedFilament = printer.filaments.find(f => f.name === selectedFilamentType);
+  const availableColors = selectedFilament?.colors.filter(c => c.status !== "empty") || [];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    alert(`Booking confirmed!\n\nPrinter: ${printer.name}\nDate: ${date ? format(date, 'PPP') : ''}\nTime: ${timeSlot}\nDuration: ${duration}\nMaterial: ${material}\n\nContact: ${firstName} ${lastName}\nEmail: ${email}`);
+    alert(`Booking confirmed!\n\nPrinter: ${printer.name}\nDate: ${date ? format(date, 'PPP') : ''}\nTime: ${timeSlot}\nDuration: ${duration}\nFilament: ${selectedFilamentType} - ${selectedColor}\n\nContact: ${firstName} ${lastName}\nEmail: ${email}`);
     
     // Reset form
     setDate(undefined);
@@ -78,7 +87,8 @@ export function PrinterBookingDialog({
     setEmail("");
     setPhone("");
     setProjectDescription("");
-    setMaterial("");
+    setSelectedFilamentType("");
+    setSelectedColor("");
     onOpenChange(false);
   };
 
@@ -125,7 +135,7 @@ export function PrinterBookingDialog({
                       mode="single"
                       selected={date}
                       onSelect={setDate}
-                      disabled={(date) => 
+                      disabled={(date: Date) => 
                         date < new Date() || date < new Date("2025-10-21")
                       }
                       initialFocus
@@ -159,6 +169,74 @@ export function PrinterBookingDialog({
 
           {/* Project Details */}
           <div>
+            <h3 className="mb-4">Filament selectie</h3>
+            
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="filamentType">
+                  Filament type *
+                </Label>
+                <Select value={selectedFilamentType} onValueChange={(value: string) => {
+                  setSelectedFilamentType(value);
+                  setSelectedColor("");
+                }}>
+                  <SelectTrigger id="filamentType">
+                    <SelectValue placeholder="Selecteer filament type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {printer.filaments.map((filament) => {
+                      const availableCount = filament.colors.filter(c => c.status !== "empty").length;
+                      return (
+                        <SelectItem key={filament.name} value={filament.name} disabled={availableCount === 0}>
+                          {filament.name} ({availableCount} kleuren beschikbaar)
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {selectedFilamentType && (
+                <div className="space-y-2">
+                  <Label>Kleur *</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {availableColors.map((color) => (
+                      <button
+                        key={color.name}
+                        type="button"
+                        onClick={() => setSelectedColor(color.name)}
+                        className={`p-3 rounded-lg border-2 transition-all ${
+                          selectedColor === color.name
+                            ? "border-purple-500 bg-purple-50"
+                            : "border-slate-200 bg-white hover:border-purple-300"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <div 
+                            className="w-8 h-8 rounded-full border-2 border-slate-300 shadow-sm"
+                            style={{ backgroundColor: color.hex }}
+                          />
+                          <div className="flex-1 text-left">
+                            <span className="text-sm font-medium text-slate-900">{color.name}</span>
+                            <Badge className={`${filamentStatusColors[color.status]} border text-xs ml-2`}>
+                              {color.status === "good" ? "✓" : "⚠"}
+                            </Badge>
+                          </div>
+                          {selectedColor === color.name && (
+                            <CheckCircle2 className="w-4 h-4 text-purple-600" />
+                          )}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <Separator />
+
+          <div>
             <h3 className="mb-4">Projectdetails</h3>
             
             <div className="space-y-4">
@@ -176,23 +254,6 @@ export function PrinterBookingDialog({
                         {tier.duration} - €{tier.price} ({tier.description})
                       </SelectItem>
                     ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="material">
-                  Materiaal *
-                </Label>
-                <Select value={material} onValueChange={setMaterial}>
-                  <SelectTrigger id="material">
-                    <SelectValue placeholder="Selecteer materiaal" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="pla">PLA (Meest gebruikt)</SelectItem>
-                    <SelectItem value="abs">ABS (Steviger)</SelectItem>
-                    <SelectItem value="petg">PETG (Flexibel)</SelectItem>
-                    <SelectItem value="tpu">TPU (Zeer flexibel)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -327,7 +388,7 @@ export function PrinterBookingDialog({
               type="submit"
               className="flex-1"
               size="lg"
-              disabled={!date || !timeSlot || !duration || !firstName || !lastName || !email || !phone || !projectDescription || !material}
+              disabled={!date || !timeSlot || !duration || !selectedFilamentType || !selectedColor || !firstName || !lastName || !email || !phone || !projectDescription}
             >
               Bevestig Reservering
             </Button>

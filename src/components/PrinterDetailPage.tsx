@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,14 +9,19 @@ import {
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Separator } from "./ui/separator";
-import { Printer, Ruler, Layers } from "lucide-react";
+import { Printer, Ruler, Layers, CheckCircle2, ChevronRight } from "lucide-react";
 
 export type FilamentStatus = "good" | "low" | "empty";
 
+export interface FilamentColor {
+  name: string;
+  hex: string;
+  status: FilamentStatus;
+}
+
 export interface Filament {
   name: string;
-  status: FilamentStatus;
-  color: string;
+  colors: FilamentColor[];
 }
 
 export interface Printer {
@@ -112,31 +118,35 @@ export function PrinterDetailDialog({
 
           <Separator />
 
-          {/* Available Filaments */}
+          {/* Available Filaments & Colors */}
           <div>
-            <h3 className="text-slate-900 font-semibold mb-4">Available Filaments</h3>
+            <h3 className="text-slate-900 font-semibold mb-4">Available Filaments & Colors</h3>
             <p className="text-slate-600 text-sm mb-4">
-              Choose from the available filament types below. Please note the stock status before booking.
+              The following filament types and colors are available for this printer. You can select your preference when booking.
             </p>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {printer.filaments.map((filament) => (
-                <div
-                  key={filament.name}
-                  className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200"
-                >
-                  <div className="flex items-center gap-3">
-                    <div 
-                      className="w-8 h-8 rounded-full border-2 border-slate-300 shadow-sm"
-                      style={{ backgroundColor: filament.color }}
-                      title={filament.color}
-                    />
-                    <span className="font-medium text-slate-900">{filament.name}</span>
+                <div key={filament.name} className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                  <h4 className="font-medium text-slate-900 mb-3">{filament.name}</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {filament.colors.map((color) => (
+                      <div
+                        key={color.name}
+                        className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-slate-200"
+                      >
+                        <div 
+                          className="w-6 h-6 rounded-full border-2 border-slate-300 shadow-sm"
+                          style={{ backgroundColor: color.hex }}
+                        />
+                        <span className="text-sm font-medium text-slate-900">{color.name}</span>
+                        <Badge className={`${filamentStatusColors[color.status]} border text-xs`}>
+                          {color.status === "good" && "✓"}
+                          {color.status === "low" && "⚠"}
+                          {color.status === "empty" && "✗"}
+                        </Badge>
+                      </div>
+                    ))}
                   </div>
-                  <Badge className={`${filamentStatusColors[filament.status]} border`}>
-                    {filament.status === "good" && "✓ In Stock"}
-                    {filament.status === "low" && "⚠ Low Stock"}
-                    {filament.status === "empty" && "✗ Out of Stock"}
-                  </Badge>
                 </div>
               ))}
             </div>
@@ -152,19 +162,6 @@ export function PrinterDetailDialog({
                 </Badge>
               ))}
             </div>
-          </div>
-
-          {/* Action Button */}
-          <div className="flex gap-3 pt-4">
-            <Button
-              size="lg"
-              className="flex-1 bg-purple-600 hover:bg-purple-700"
-              disabled={!printer.available}
-              onClick={onBook}
-            >
-              <Printer className="w-4 h-4 mr-2" />
-              {printer.available ? "Book This Printer" : "Currently Unavailable"}
-            </Button>
           </div>
         </div>
       </DialogContent>

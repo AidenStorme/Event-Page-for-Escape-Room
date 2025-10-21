@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { EscapeRoomsPage } from "./components/EscapeRoomsPage";
-import { PrintersPage } from "./components/PrintersPage";
+import { PrintersPage } from "./components/3DPrintersPage";
 import { NormalPrintersPage } from "./components/NormalPrintersPage";
 import { Button } from "./components/ui/button";
 import { BookOpen, Printer } from "lucide-react";

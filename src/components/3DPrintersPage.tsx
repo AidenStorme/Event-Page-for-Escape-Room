@@ -15,7 +15,7 @@ const printers: Printer[] = [
     layerResolution: "0.05 - 0.35 mm",
     materials: ["PLA", "PETG", "ASA", "ABS", "TPU"],
     available: true,
-    imageUrl: "https://images.unsplash.com/photo-1544704784-59bcc978c9c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHwzZCUyMHByaW50ZXIlMjB0ZWNobm9sb2d5fGVufDF8fHx8MTc2MTAzNjMzM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    imageUrl: "https://m.media-amazon.com/images/I/61i3kl9rRtL.jpg",
     description: "Reliable workhorse perfect for beginners and advanced users. Great for detailed prints with excellent layer adhesion.",
     filaments: [
         { 
@@ -58,7 +58,7 @@ const printers: Printer[] = [
     layerResolution: "0.1 - 0.4 mm",
     materials: ["PLA", "ABS", "PETG", "TPU"],
     available: true,
-    imageUrl: "https://images.unsplash.com/photo-1703221561813-cdaa308cf9e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjAzZCUyMHByaW50aW5nfGVufDF8fHx8MTc2MTAzNjMzNHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    imageUrl: "https://asset.conrad.com/media10/isa/160267/c1/-/nl/002274563PI04/image.jpg?x=400&y=400&format=jpg&ex=400&ey=400&align=center",
     description: "Popular entry-level printer with excellent community support. Ideal for learning 3D printing basics and small to medium projects.",
     filaments: [
         { 
@@ -100,30 +100,12 @@ const printers: Printer[] = [
     layerResolution: "0.01 - 0.15 mm",
     materials: ["Standard Resin", "ABS-like Resin", "Flexible Resin"],
     available: false,
-    imageUrl: "https://images.unsplash.com/photo-1703221561813-cdaa308cf9e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHwzZCUyMHByaW50ZWQlMjBvYmplY3R8ZW58MXx8fHwxNzYxMDM2MzM0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    imageUrl: "https://uk.anycubic.com/cdn/shop/files/AnycubicPhotonMonoX6Ks_2.jpg?v=1712480585&width=1000",
     description: "Resin printer for ultra-detailed miniatures and precision parts. Produces incredibly smooth surfaces with fine details.",
     filaments: [
-        { 
-          name: "Standard Resin", 
-          colors: [
-            { name: "Clear", hex: "#F3F4F6", status: "low" },
-            { name: "Gray", hex: "#9CA3AF", status: "good" },
-          ]
-        },
-        { 
-          name: "ABS-like Resin", 
-          colors: [
-            { name: "Black", hex: "#1F2937", status: "empty" },
-            { name: "White", hex: "#F9FAFB", status: "empty" },
-          ]
-        },
-        { 
-          name: "Flexible Resin", 
-          colors: [
-            { name: "Purple", hex: "#8B5CF6", status: "good" },
-            { name: "Blue", hex: "#3B82F6", status: "good" },
-          ]
-        },
+        { name: "Standard Resin", status: "low" },
+        { name: "ABS-like Resin", status: "empty" },
+        { name: "Flexible Resin", status: "good" },
     ],
   },
 ];
