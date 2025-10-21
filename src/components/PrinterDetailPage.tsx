@@ -33,7 +33,7 @@ export interface Printer {
   available: boolean;
   imageUrl: string;
   description: string;
-  filaments: Filament[];
+  filaments?: Filament[];
 }
 
 interface PrinterDetailDialogProps {
@@ -118,39 +118,44 @@ export function PrinterDetailDialog({
 
           <Separator />
 
-          {/* Available Filaments & Colors */}
-          <div>
-            <h3 className="text-slate-900 font-semibold mb-4">Available Filaments & Colors</h3>
-            <p className="text-slate-600 text-sm mb-4">
-              The following filament types and colors are available for this printer. You can select your preference when booking.
-            </p>
-            <div className="space-y-4">
-              {printer.filaments.map((filament) => (
-                <div key={filament.name} className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-                  <h4 className="font-medium text-slate-900 mb-3">{filament.name}</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {filament.colors.map((color) => (
-                      <div
-                        key={color.name}
-                        className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-slate-200"
-                      >
-                        <div 
-                          className="w-6 h-6 rounded-full border-2 border-slate-300 shadow-sm"
-                          style={{ backgroundColor: color.hex }}
-                        />
-                        <span className="text-sm font-medium text-slate-900">{color.name}</span>
-                        <Badge className={`${filamentStatusColors[color.status]} border text-xs`}>
-                          {color.status === "good" && "✓"}
-                          {color.status === "low" && "⚠"}
-                          {color.status === "empty" && "✗"}
-                        </Badge>
+          {/* Available Filaments & Colors (Only for 3D Printers) */}
+          {printer.filaments && printer.filaments.length > 0 && (
+            <>
+              <div>
+                <h3 className="text-slate-900 font-semibold mb-4">Available Filaments & Colors</h3>
+                <p className="text-slate-600 text-sm mb-4">
+                  The following filament types and colors are available for this printer. You can select your preference when booking.
+                </p>
+                <div className="space-y-4">
+                  {printer.filaments.map((filament) => (
+                    <div key={filament.name} className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                      <h4 className="font-medium text-slate-900 mb-3">{filament.name}</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {filament.colors.map((color) => (
+                          <div
+                            key={color.name}
+                            className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-slate-200"
+                          >
+                            <div 
+                              className="w-6 h-6 rounded-full border-2 border-slate-300 shadow-sm"
+                              style={{ backgroundColor: color.hex }}
+                            />
+                            <span className="text-sm font-medium text-slate-900">{color.name}</span>
+                            <Badge className={`${filamentStatusColors[color.status]} border text-xs`}>
+                              {color.status === "good" && "✓"}
+                              {color.status === "low" && "⚠"}
+                              {color.status === "empty" && "✗"}
+                            </Badge>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
+              <Separator />
+            </>
+          )}
 
           {/* Supported Materials */}
           <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">

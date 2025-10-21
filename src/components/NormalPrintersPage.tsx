@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PrinterCard } from "./PrinterCard";
 import { PrinterBookingDialog } from "./PrinterBookingDialog";
+import { PrinterDetailDialog } from "./PrinterDetailPage";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Search, Filter, Printer as PrinterIcon } from "lucide-react";
@@ -42,10 +43,16 @@ const printers = [
 export function NormalPrintersPage() {
   const [selectedPrinter, setSelectedPrinter] = useState<typeof printers[0] | null>(null);
   const [bookingDialogOpen, setBookingDialogOpen] = useState(false);
+  const [detailDialogOpen, setDetailDialogOpen] = useState(false);
 
   const handleBookNow = (printer: typeof printers[0]) => {
     setSelectedPrinter(printer);
     setBookingDialogOpen(true);
+  };
+
+  const handleViewDetails = (printer: typeof printers[0]) => {
+    setSelectedPrinter(printer);
+    setDetailDialogOpen(true);
   };
 
   return (
@@ -109,9 +116,17 @@ export function NormalPrintersPage() {
               key={index}
               {...printer}
               onBookNow={() => handleBookNow(printer)}
+              onViewDetails={() => handleViewDetails(printer)}
             />
           ))}
         </div>
+
+        {/* Printer Detail Dialog */}
+        <PrinterDetailDialog
+          open={detailDialogOpen}
+          onOpenChange={setDetailDialogOpen}
+          printer={selectedPrinter}
+        />
 
         {/* Printer Booking Dialog */}
         <PrinterBookingDialog
