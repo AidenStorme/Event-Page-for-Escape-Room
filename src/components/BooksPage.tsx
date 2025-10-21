@@ -79,7 +79,11 @@ function BookCard({ book }: { book: Book }) {
       <CardHeader className="p-0 relative">
         <img src={book.coverUrl} alt={`Cover of ${book.title}`} className="w-full h-64 object-cover" />
         <Badge 
-          className={`absolute top-2 right-2 ${book.availability === 'available' ? 'bg-green-500' : 'bg-slate-400'}`}
+          className={`absolute top-4 right-4 border ${
+            book.availability === 'available' 
+              ? 'bg-green-100 text-green-800 border-green-300' 
+              : 'bg-slate-100 text-slate-800 border-slate-300'
+          }`}
         >
           {book.availability === 'available' ? 'Available' : 'Checked Out'}
         </Badge>
