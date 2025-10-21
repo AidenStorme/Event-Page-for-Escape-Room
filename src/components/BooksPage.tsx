@@ -143,8 +143,9 @@ export function BooksPage() {
       </section>
 
       {/* Search Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex justify-center gap-2 mb-6">
+      <section className="bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex justify-center gap-2 mb-6">
           <Button 
             variant={searchType === "normal" ? "default" : "outline"}
             onClick={() => setSearchType("normal")}
@@ -188,6 +189,7 @@ export function BooksPage() {
             </div>
           </TabsContent>
         </Tabs>
+        </div>
       </section>
 
       {/* Books List */}
