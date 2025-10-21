@@ -47,12 +47,6 @@ const timeSlots = [
   "17:00 - 19:00",
 ];
 
-const pricingTiers = [
-  { duration: "1-2 uur", price: 5, description: "Kleine projecten" },
-  { duration: "3-4 uur", price: 8, description: "Middelgrote projecten" },
-  { duration: "5+ uur", price: 12, description: "Grote projecten" },
-];
-
 export function PrinterBookingDialog({
   open,
   onOpenChange,
@@ -60,7 +54,6 @@ export function PrinterBookingDialog({
 }: PrinterBookingDialogProps) {
   const [date, setDate] = useState<Date>();
   const [timeSlot, setTimeSlot] = useState("");
-  const [duration, setDuration] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -81,12 +74,11 @@ export function PrinterBookingDialog({
     e.preventDefault();
     
     const filamentInfo = is3DPrinter ? `\nFilament: ${selectedFilamentType} - ${selectedColor}` : '';
-    alert(`Booking confirmed!\n\nPrinter: ${printer.name}\nDate: ${date ? format(date, 'PPP') : ''}\nTime: ${timeSlot}\nDuration: ${duration}${filamentInfo}\n\nContact: ${firstName} ${lastName}\nEmail: ${email}`);
+    alert(`Booking confirmed!\n\nPrinter: ${printer.name}\nDate: ${date ? format(date, 'PPP') : ''}\nTime: ${timeSlot}${filamentInfo}\n\nContact: ${firstName} ${lastName}\nEmail: ${email}`);
     
     // Reset form
     setDate(undefined);
     setTimeSlot("");
-    setDuration("");
     setFirstName("");
     setLastName("");
     setEmail("");
@@ -174,6 +166,115 @@ export function PrinterBookingDialog({
 
           <Separator />
 
+          {/* File Upload Section */}
+          <div>
+            <h3 className="mb-4">Hoe wil je {is3DPrinter ? 'printen' : 'printen'}?</h3>
+            <p className="text-sm text-slate-600 mb-4">
+              {is3DPrinter 
+                ? 'Kies of je het 3D-bestand nu wilt uploaden of dat je het mee wilt nemen om ter plaatse te printen.'
+                : 'Kies of je het document nu wilt uploaden voor latere afhaling, of dat je het bestand mee wilt nemen om ter plaatse te printen.'}
+            </p>
+            
+            <div className="grid gap-3">
+              <button
+                type="button"
+                onClick={() => setUploadOption("later")}
+                className={`p-4 rounded-lg border-2 transition-all text-left ${
+                  uploadOption === "later"
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-slate-200 bg-white hover:border-blue-300"
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5 ${
+                    uploadOption === "later" ? "border-blue-500" : "border-slate-300"
+                  }`}>
+                    {uploadOption === "later" && (
+                      <div className="w-3 h-3 rounded-full bg-blue-500" />
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <FileText className="w-5 h-5 text-blue-600" />
+                      <span className="font-semibold text-slate-900">{is3DPrinter ? 'Bestand meenemen' : 'Print on-site'}</span>
+                    </div>
+                    <p className="text-sm text-slate-600 mt-1">
+                      {is3DPrinter 
+                        ? 'Neem je 3D-bestand mee op een USB-stick en print direct ter plaatse tijdens je tijdslot.'
+                        : 'Neem je bestand mee op een USB-stick en print direct ter plaatse tijdens je tijdslot.'}
+                    </p>
+                  </div>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setUploadOption("now")}
+                className={`p-4 rounded-lg border-2 transition-all text-left ${
+                  uploadOption === "now"
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-slate-200 bg-white hover:border-blue-300"
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5 ${
+                    uploadOption === "now" ? "border-blue-500" : "border-slate-300"
+                  }`}>
+                    {uploadOption === "now" && (
+                      <div className="w-3 h-3 rounded-full bg-blue-500" />
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <Upload className="w-5 h-5 text-blue-600" />
+                      <span className="font-semibold text-slate-900">{is3DPrinter ? 'Upload nu' : 'Upload & Pick Up'}</span>
+                    </div>
+                    <p className="text-sm text-slate-600 mt-1">
+                      {is3DPrinter
+                        ? 'Upload je 3D-bestand nu en we zorgen dat het klaar is tijdens je tijdslot.'
+                        : 'Upload je document nu en haal het op het gekozen tijdstip op - klaar om mee te nemen!'}
+                    </p>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            {uploadOption === 'now' && (
+              <div className="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
+                <Label htmlFor="file-upload" className="text-sm font-semibold text-slate-900 mb-3 block">
+                  Upload je {is3DPrinter ? '3D-bestand' : 'document'}
+                </Label>
+                <div className="space-y-3">
+                  <div className="relative">
+                    <Input 
+                      id="file-upload" 
+                      type="file" 
+                      onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} 
+                      className="file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer"
+                      accept={is3DPrinter ? ".stl,.obj,.3mf,.gcode" : ".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"}
+                    />
+                  </div>
+                  {file && (
+                    <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-blue-200">
+                      <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-slate-900 truncate">{file.name}</p>
+                        <p className="text-xs text-slate-500">{(file.size / 1024).toFixed(2)} KB</p>
+                      </div>
+                    </div>
+                  )}
+                  <p className="text-xs text-slate-500">
+                    {is3DPrinter 
+                      ? 'Ondersteunde formaten: STL, OBJ, 3MF, GCODE (Max 50MB)'
+                      : 'Ondersteunde formaten: PDF, DOC, DOCX, TXT, JPG, PNG (Max 10MB)'}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <Separator />
+
           {/* Filament Selection (Only for 3D Printers) */}
           {is3DPrinter && (
             <>
@@ -247,143 +348,21 @@ export function PrinterBookingDialog({
           </>
           )}
 
-          {/* File Upload (Only for Normal Printers) */}
-          {!is3DPrinter && (
-            <>
-              <div>
-                <h3 className="mb-4">Hoe wil je printen?</h3>
-                <p className="text-sm text-slate-600 mb-4">
-                  Kies of je het document nu wilt uploaden voor latere afhaling, of dat je het bestand mee wilt nemen om ter plaatse te printen.
-                </p>
-                
-                <div className="grid gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setUploadOption("later")}
-                    className={`p-4 rounded-lg border-2 transition-all text-left ${
-                      uploadOption === "later"
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-slate-200 bg-white hover:border-blue-300"
-                    }`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5 ${
-                        uploadOption === "later" ? "border-blue-500" : "border-slate-300"
-                      }`}>
-                        {uploadOption === "later" && (
-                          <div className="w-3 h-3 rounded-full bg-blue-500" />
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <FileText className="w-5 h-5 text-blue-600" />
-                          <span className="font-semibold text-slate-900">Print on-site</span>
-                        </div>
-                        <p className="text-sm text-slate-600 mt-1">
-                          Neem je bestand mee op een USB-stick en print direct ter plaatse tijdens je tijdslot.
-                        </p>
-                      </div>
-                    </div>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setUploadOption("now")}
-                    className={`p-4 rounded-lg border-2 transition-all text-left ${
-                      uploadOption === "now"
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-slate-200 bg-white hover:border-blue-300"
-                    }`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5 ${
-                        uploadOption === "now" ? "border-blue-500" : "border-slate-300"
-                      }`}>
-                        {uploadOption === "now" && (
-                          <div className="w-3 h-3 rounded-full bg-blue-500" />
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <Upload className="w-5 h-5 text-blue-600" />
-                          <span className="font-semibold text-slate-900">Upload & Pick Up</span>
-                        </div>
-                        <p className="text-sm text-slate-600 mt-1">
-                          Upload je document nu en haal het op het gekozen tijdstip op - klaar om mee te nemen!
-                        </p>
-                      </div>
-                    </div>
-                  </button>
-                </div>
-
-                {uploadOption === 'now' && (
-                  <div className="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
-                    <Label htmlFor="file-upload" className="text-sm font-semibold text-slate-900 mb-3 block">
-                      Upload je document
-                    </Label>
-                    <div className="space-y-3">
-                      <div className="relative">
-                        <Input 
-                          id="file-upload" 
-                          type="file" 
-                          onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} 
-                          className="file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer"
-                          accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
-                        />
-                      </div>
-                      {file && (
-                        <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-blue-200">
-                          <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-slate-900 truncate">{file.name}</p>
-                            <p className="text-xs text-slate-500">{(file.size / 1024).toFixed(2)} KB</p>
-                          </div>
-                        </div>
-                      )}
-                      <p className="text-xs text-slate-500">
-                        Ondersteunde formaten: PDF, DOC, DOCX, TXT, JPG, PNG (Max 10MB)
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <Separator />
-            </>
-          )}
-
           {/* Project Details */}
           <div>
-            <h3 className="mb-4">Projectdetails</h3>
+            <h3 className="mb-4">{is3DPrinter ? 'Projectdetails' : 'Print Details'}</h3>
             
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="duration">
-                  Geschatte duur *
-                </Label>
-                <Select value={duration} onValueChange={setDuration}>
-                  <SelectTrigger id="duration">
-                    <SelectValue placeholder="Selecteer duur" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {pricingTiers.map((tier) => (
-                      <SelectItem key={tier.duration} value={tier.duration}>
-                        {tier.duration} - €{tier.price} ({tier.description})
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
                 <Label htmlFor="description">
                   <FileText className="w-4 h-4 inline mr-2" />
-                  Projectbeschrijving *
+                  {is3DPrinter ? 'Projectbeschrijving' : 'Opmerking'} *
                 </Label>
                 <Textarea
                   id="description"
                   value={projectDescription}
                   onChange={(e) => setProjectDescription(e.target.value)}
-                  placeholder="Beschrijf wat je wilt printen..."
+                  placeholder={is3DPrinter ? "Beschrijf wat je wilt printen..." : "Voeg eventuele opmerkingen toe..."}
                   rows={4}
                   required
                 />
@@ -391,27 +370,33 @@ export function PrinterBookingDialog({
             </div>
 
             {/* Pricing Display */}
-            {duration && (
+            {!is3DPrinter && (
               <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-blue-900">
-                      {duration}
-                    </p>
-                    <p className="text-xs text-blue-700 mt-1">
-                      Materiaalkosten niet inbegrepen
-                    </p>
+                <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+                  <Euro className="w-5 h-5" />
+                  Printkosten
+                </h4>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-blue-900">Zwart-wit printen</span>
+                    <span className="text-sm font-semibold text-blue-900">€0.10 per pagina</span>
                   </div>
-                  <div className="text-right">
-                    <div className="flex items-center gap-1">
-                      <Euro className="w-5 h-5 text-blue-600" />
-                      <span className="text-blue-900">
-                        {pricingTiers.find(t => t.duration === duration)?.price}
-                      </span>
-                    </div>
-                    <p className="text-xs text-blue-700">Basisprijs</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-blue-900">Kleur printen</span>
+                    <span className="text-sm font-semibold text-blue-900">€0.25 per pagina</span>
                   </div>
                 </div>
+                <p className="text-xs text-blue-700 mt-3">
+                  Kosten worden berekend op basis van het aantal pagina's
+                </p>
+              </div>
+            )}
+
+            {is3DPrinter && (
+              <div className="mt-4 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                <p className="text-sm text-purple-900">
+                  <strong>Let op:</strong> Materiaalkosten worden apart berekend op basis van gewicht.
+                </p>
               </div>
             )}
           </div>
@@ -492,14 +477,15 @@ export function PrinterBookingDialog({
               <ul className="list-disc list-inside space-y-1 mt-1">
                 {is3DPrinter ? (
                   <>
-                    <li>Breng je eigen 3D-bestand mee (.STL of .OBJ formaat)</li>
+                    <li>Upload je 3D-bestand (.STL, .OBJ, .3MF of .GCODE) of neem het mee op USB</li>
                     <li>Kom 15 minuten voor je tijdslot voor instructies</li>
                     <li>Materiaalkosten worden apart berekend op basis van gewicht</li>
                   </>
                 ) : (
                   <>
-                    <li>Zorg dat je document klaar is om te printen.</li>
-                    <li>Als je het bestand niet uploadt, neem het dan mee op een USB-stick.</li>
+                    <li>Upload je document of neem het mee op een USB-stick</li>
+                    <li>Zorg dat je document klaar is om te printen</li>
+                    <li>Kosten worden berekend per pagina bij afhaling</li>
                   </>
                 )}
                 <li>Je ontvangt een bevestigingsmail na reservering</li>
@@ -516,7 +502,6 @@ export function PrinterBookingDialog({
               disabled={
                 !date || 
                 !timeSlot || 
-                !duration || 
                 (is3DPrinter && (!selectedFilamentType || !selectedColor)) || 
                 !firstName || 
                 !lastName || 
