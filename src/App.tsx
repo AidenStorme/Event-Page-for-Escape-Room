@@ -4,8 +4,9 @@ import { PrintersPage } from "./components/3DPrintersPage";
 import { NormalPrintersPage } from "./components/NormalPrintersPage";
 import { Button } from "./components/ui/button";
 import { BookOpen, Printer } from "lucide-react";
+import { BooksPage } from "./components/BooksPage";
 
-type Page = "escape-rooms" | "printers" | "normal-printers";
+type Page = "escape-rooms" | "printers" | "normal-printers" | "books";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>("escape-rooms");
@@ -27,7 +28,7 @@ export default function App() {
               <div>
                 <h1 className="text-slate-900">Riverside Public Library</h1>
                 <p className="text-sm text-slate-600">
-                  {currentPage === "escape-rooms" ? "Literary Escape Rooms" : currentPage === "printers" ? "3D Printer Lab" : "Document Printers"}
+                  {currentPage === "escape-rooms" ? "Literary Escape Rooms" : currentPage === "printers" ? "3D Printer Lab" : currentPage === "books" ? "Digital Library" : "Document Printers"}
                 </p>
               </div>
             </div>
@@ -58,6 +59,14 @@ export default function App() {
                 <Printer className="w-4 h-4 mr-2" />
                 Printers
               </Button>
+              <Button
+                variant={currentPage === "books" ? "default" : "outline"}
+                onClick={() => setCurrentPage("books")}
+                className={currentPage === "books" ? "bg-purple-600 hover:bg-purple-700" : ""}
+              >
+                <BookOpen className="w-4 h-4 mr-2" />
+                Books
+              </Button>
             </div>
           </div>
         </div>
@@ -67,6 +76,7 @@ export default function App() {
       {currentPage === "escape-rooms" && <EscapeRoomsPage />}
       {currentPage === "printers" && <PrintersPage />}
       {currentPage === "normal-printers" && <NormalPrintersPage />}
+      {currentPage === "books" && <BooksPage />}
 
       {/* Footer */}
       <footer className="bg-slate-900 text-white py-8 mt-16">
