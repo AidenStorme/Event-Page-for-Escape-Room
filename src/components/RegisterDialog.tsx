@@ -20,6 +20,7 @@ import { Separator } from "./ui/separator";
 import { Badge } from "./ui/badge";
 import { Calendar, Users, Euro, Mail, Phone, User, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "./ui/alert";
+import { addPoints } from "./PointsDisplay";
 
 interface RegisterDialogProps {
   open: boolean;
@@ -87,6 +88,12 @@ export function RegisterDialog({
     
     // Here you would normally send the booking data to your backend
     alert(`Boeking bevestigd!\n\nEvenement: ${event.title}\nDatum: ${event.date}\nTijd: ${event.time}\nGasten: ${numAdults} volwassenen, ${numKids} kinderen\nTotaal: €${totalPrice}\n\nContact: ${firstName} ${lastName}\nE-mail: ${email}`);
+
+    // Award a small number of points for a successful registration
+    // This can be adjusted or moved to a backend integration later
+    try {
+      addPoints(25);
+    } catch {}
     
     // Reset form
     setNumAdults(2);
@@ -141,7 +148,7 @@ export function RegisterDialog({
                 </Label>
                 <Select
                   value={numAdults.toString()}
-                  onValueChange={(value) => setNumAdults(parseInt(value))}
+                  onValueChange={(value: string) => setNumAdults(parseInt(value))}
                 >
                   <SelectTrigger id="adults">
                     <SelectValue />
@@ -163,7 +170,7 @@ export function RegisterDialog({
                 </Label>
                 <Select
                   value={numKids.toString()}
-                  onValueChange={(value) => setNumKids(parseInt(value))}
+                  onValueChange={(value: string) => setNumKids(parseInt(value))}
                 >
                   <SelectTrigger id="kids">
                     <SelectValue />

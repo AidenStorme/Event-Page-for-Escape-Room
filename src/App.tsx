@@ -5,11 +5,13 @@ import { NormalPrintersPage } from "./components/NormalPrintersPage";
 import { Button } from "./components/ui/button";
 import { BookOpen, Printer } from "lucide-react";
 import { BooksPage } from "./components/BooksPage";
+import { PointsDisplay } from "./components/PointsDisplay";
 
 type Page = "escape-rooms" | "printers" | "normal-printers" | "books";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>("escape-rooms");
+  
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -17,7 +19,7 @@ export default function App() {
       <header className="bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-1">
               <div className={`${currentPage === "escape-rooms" ? "bg-blue-600" : currentPage === "printers" ? "bg-purple-600" : "bg-blue-600"} text-white p-2 rounded-lg transition-colors`}>
                 {currentPage === "escape-rooms" ? (
                   <BookOpen className="w-6 h-6" />
@@ -25,16 +27,21 @@ export default function App() {
                   <Printer className="w-6 h-6" />
                 )}
               </div>
-              <div>
+              <div className="flex-1">
                 <h1 className="text-slate-900">Riverside Openbare Bibliotheek</h1>
                 <p className="text-sm text-slate-600">
                   {currentPage === "escape-rooms" ? "Literaire Escape Rooms" : currentPage === "printers" ? "3D Printer Lab" : currentPage === "books" ? "Digitale Bibliotheek" : "Document Printers"}
                 </p>
               </div>
+              
+              {/* Points Display */}
+              <div className="ml-auto">
+                <PointsDisplay />
+              </div>
             </div>
             
             {/* Navigation */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <Button
                 variant={currentPage === "escape-rooms" ? "default" : "outline"}
                 onClick={() => setCurrentPage("escape-rooms")}
