@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { Search, Filter, Printer as PrinterIcon } from "lucide-react";
 import { Input } from "./ui/input";
 
+// These are the different printers
 const printers: Printer[] = [
   {
     name: "Prusa i3 MK3S+",
