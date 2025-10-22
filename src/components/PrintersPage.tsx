@@ -16,7 +16,7 @@ const printers: Printer[] = [
     materials: ["PLA", "PETG", "ASA", "ABS", "TPU"],
     available: true,
     imageUrl: "https://images.unsplash.com/photo-1544704784-59bcc978c9c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHwzZCUyMHByaW50ZXIlMjB0ZWNobm9sb2d5fGVufDF8fHx8MTc2MTAzNjMzM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    description: "Reliable workhorse perfect for beginners and advanced users. Great for detailed prints with excellent layer adhesion.",
+    description: "Betrouwbaar werkpaard perfect voor beginners en gevorderde gebruikers. Geweldig voor gedetailleerde prints met uitstekende laaghechting.",
     filaments: [
         { 
           name: "PLA", 
@@ -59,7 +59,7 @@ const printers: Printer[] = [
     materials: ["PLA", "ABS", "PETG", "TPU"],
     available: true,
     imageUrl: "https://images.unsplash.com/photo-1703221561813-cdaa308cf9e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjAzZCUyMHByaW50aW5nfGVufDF8fHx8MTc2MTAzNjMzNHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    description: "Popular entry-level printer with excellent community support. Ideal for learning 3D printing basics and small to medium projects.",
+    description: "Populaire instapprinter met uitstekende community ondersteuning. Ideaal voor het leren van 3D-printbeginselen en kleine tot middelgrote projecten.",
     filaments: [
         { 
           name: "PLA", 
@@ -101,7 +101,7 @@ const printers: Printer[] = [
     materials: ["Standard Resin", "ABS-like Resin", "Flexible Resin"],
     available: false,
     imageUrl: "https://images.unsplash.com/photo-1703221561813-cdaa308cf9e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHwzZCUyMHByaW50ZWQlMjBvYmplY3R8ZW58MXx8fHwxNzYxMDM2MzM0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    description: "Resin printer for ultra-detailed miniatures and precision parts. Produces incredibly smooth surfaces with fine details.",
+    description: "Resin printer voor ultragedetailleerde miniaturen en precisieonderdelen. Produceert ongelooflijk gladde oppervlakken met fijne details.",
     filaments: [
         { 
           name: "Standard Resin", 
@@ -156,15 +156,15 @@ export function PrintersPage() {
               3D Printer Lab
             </h2>
             <p className="text-purple-100 text-lg mb-6">
-              Turn your ideas into reality with our state-of-the-art 3D printers. 
-              From prototypes to finished products, we provide the tools and support you need.
+              Verwezenlijk je ideeën met onze geavanceerde 3D-printers. 
+              Van prototypes tot afgewerkte producten, wij bieden de tools en ondersteuning die je nodig hebt.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button size="lg" className="bg-white text-purple-600 hover:bg-purple-50">
-                Book a Printer
+                Boek een Printer
               </Button>
-              <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
-                View Guidelines
+              <Button size="lg" variant="outline" className="bg-white/20 text-white border-white hover:bg-white/30">
+                Bekijk Richtlijnen
               </Button>
             </div>
           </div>
@@ -178,13 +178,13 @@ export function PrintersPage() {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
               <Input
-                placeholder="Search by printer name or material..."
+                placeholder="Zoek op printernaam of materiaal..."
                 className="pl-10"
               />
             </div>
             <Button variant="outline" className="sm:w-auto">
               <Filter className="w-4 h-4 mr-2" />
-              Filter
+              Filteren
             </Button>
           </div>
         </div>
@@ -193,9 +193,9 @@ export function PrintersPage() {
       {/* Printers List */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h2 className="text-slate-900 mb-2">Available Printers</h2>
+          <h2 className="text-slate-900 mb-2">Beschikbare Printers</h2>
           <p className="text-slate-600">
-            Reserve a time slot and bring your 3D model file to start printing!
+            Reserveer een tijdslot en breng je 3D-modelbestand mee om te beginnen met printen!
           </p>
         </div>
 

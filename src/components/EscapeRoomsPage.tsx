@@ -9,51 +9,51 @@ import { Input } from "./ui/input";
 
 const upcomingEvents = [
   {
-    title: "Murder at the Manor: A Gothic Mystery",
+    title: "Moord in het Landhuis: Een Gotisch Mysterie",
     bookTitle: "The Silent Patient",
     bookAuthor: "Alex Michaelides",
-    date: "November 2, 2025",
-    time: "6:00 PM - 8:30 PM",
+    date: "2 november 2025",
+    time: "18:00 - 20:30",
     spotsLeft: 2,
     totalSpots: 8,
     difficulty: "Advanced" as const,
-    description: "Unravel the secrets of Thornfield Manor where a crime has shaken its foundations. Use your knowledge from The Silent Patient to decode psychological clues and unmask the killer.",
+    description: "Ontrafel de geheimen van Thornfield Manor waar een misdaad de fundamenten heeft doen schudden. Gebruik je kennis van The Silent Patient om psychologische aanwijzingen te ontcijferen en de moordenaar te ontmaskeren.",
     imageUrl: "https://images.unsplash.com/photo-1569002925653-ed18f55d7292?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlc2NhcGUlMjByb29tJTIwbXlzdGVyeXxlbnwxfHx8fDE3NjEwMzQ4NjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
   },
   {
-    title: "The Curious Case of the Missing Manuscript",
+    title: "De Merkwaardige Zaak van het Vermiste Manuscript",
     bookTitle: "The Adventures of Sherlock Holmes",
     bookAuthor: "Arthur Conan Doyle",
-    date: "November 9, 2025",
-    time: "3:00 PM - 5:30 PM",
+    date: "9 november 2025",
+    time: "15:00 - 17:30",
     spotsLeft: 6,
     totalSpots: 10,
     difficulty: "Intermediate" as const,
-    description: "Step into Victorian London and solve a literary mystery worthy of Baker Street. Apply Holmes' deductive reasoning methods to recover a priceless stolen manuscript.",
+    description: "Stap het Victoriaanse Londen binnen en los een literair mysterie op dat Baker Street waardig is. Pas Holmes' deductieve redeneermethoden toe om een onbetaalbaar gestolen manuscript terug te vinden.",
     imageUrl: "https://images.unsplash.com/photo-1650178284536-2d6dff47f903?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXRlY3RpdmUlMjBib29rJTIwdmludGFnZXxlbnwxfHx8fDE3NjEwMzQ4NjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
   },
   {
-    title: "The Enchanted Library Heist",
+    title: "De Betoverde Bibliotheek Overval",
     bookTitle: "The Night Circus",
     bookAuthor: "Erin Morgenstern",
-    date: "November 16, 2025",
-    time: "7:00 PM - 9:00 PM",
+    date: "16 november 2025",
+    time: "19:00 - 21:00",
     spotsLeft: 8,
     totalSpots: 12,
     difficulty: "Beginner" as const,
-    description: "Navigate through magical puzzles and illusory challenges inspired by The Night Circus. Perfect for first-time escape room adventurers with a love for whimsical mysteries.",
+    description: "Navigeer door magische puzzels en illusoire uitdagingen geïnspireerd door The Night Circus. Perfect voor beginnende escape room avonturiers met een liefde voor grillige mysteries.",
     imageUrl: "https://images.unsplash.com/photo-1658792953327-e3c9e7223e92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaWJyYXJ5JTIwYm9va3MlMjBteXN0ZXJ5fGVufDF8fHx8MTc2MTAzNDg2Mnww&ixlib=rb-4.1.0&q=80&w=1080",
   },
   {
-    title: "The Poisoned Pen Society",
+    title: "De Vergiftigde Pen Genootschap",
     bookTitle: "And Then There Were None",
     bookAuthor: "Agatha Christie",
-    date: "November 23, 2025",
-    time: "5:30 PM - 8:00 PM",
+    date: "23 november 2025",
+    time: "17:30 - 20:00",
     spotsLeft: 1,
     totalSpots: 8,
     difficulty: "Advanced" as const,
-    description: "Join an exclusive literary society's gathering that turns deadly. Channel your inner Agatha Christie to identify the killer among a cast of suspicious characters.",
+    description: "Sluit je aan bij een exclusieve bijeenkomst van een literair genootschap die dodelijk afloopt. Kanaliseer je innerlijke Agatha Christie om de moordenaar te identificeren tussen een cast van verdachte personages.",
     imageUrl: "https://images.unsplash.com/photo-1569002925653-ed18f55d7292?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlc2NhcGUlMjByb29tJTIwbXlzdGVyeXxlbnwxfHx8fDE3NjEwMzQ4NjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
   },
 ];
@@ -80,21 +80,21 @@ export function EscapeRoomsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <Badge className="bg-white/20 text-white border-white/30 mb-4">
-              New Events Added
+              Nieuwe Evenementen Toegevoegd
             </Badge>
             <h2 className="text-white mb-4">
-              Literary Escape Room Adventures
+              Literaire Escape Room Avonturen
             </h2>
             <p className="text-blue-100 text-lg mb-6">
-              Immerse yourself in thrilling mysteries inspired by classic and contemporary literature. 
-              Read the book, master the story, and unlock the secrets within our escape rooms.
+              Dompel jezelf onder in spannende mysteries geïnspireerd door klassieke en hedendaagse literatuur. 
+              Lees het boek, beheers het verhaal en ontgrendel de geheimen binnen onze escape rooms.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50">
-                Browse All Events
+                Bekijk Alle Evenementen
               </Button>
-              <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
-                How It Works
+              <Button size="lg" variant="outline" className="bg-white/20 text-white border-white hover:bg-white/30">
+                Hoe Het Werkt
               </Button>
             </div>
           </div>
@@ -108,13 +108,13 @@ export function EscapeRoomsPage() {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
               <Input
-                placeholder="Search by book title or author..."
+                placeholder="Zoek op boektitel of auteur..."
                 className="pl-10"
               />
             </div>
             <Button variant="outline" className="sm:w-auto">
               <Filter className="w-4 h-4 mr-2" />
-              Filter
+              Filteren
             </Button>
           </div>
         </div>
@@ -123,9 +123,9 @@ export function EscapeRoomsPage() {
       {/* Events List */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h2 className="text-slate-900 mb-2">Upcoming Events</h2>
+          <h2 className="text-slate-900 mb-2">Aankomende Evenementen</h2>
           <p className="text-slate-600">
-            Reserve your spot and make sure to finish reading the required book before the event!
+            Reserveer je plek en zorg ervoor dat je het vereiste boek hebt uitgelezen voor het evenement!
           </p>
         </div>
 
@@ -160,33 +160,33 @@ export function EscapeRoomsPage() {
 
         {/* Info Box */}
         <div className="mt-12 bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="text-blue-900 mb-3">How It Works</h3>
+          <h3 className="text-blue-900 mb-3">Hoe Het Werkt</h3>
           <div className="grid md:grid-cols-3 gap-6">
             <div>
               <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mb-3">
                 1
               </div>
-              <p className="text-blue-900 mb-1">Read the Book</p>
+              <p className="text-blue-900 mb-1">Lees het Boek</p>
               <p className="text-sm text-blue-700">
-                Complete the required reading before the event date. Knowledge from the book is essential to solving puzzles.
+                Voltooi de verplichte lectuur voor de datum van het evenement. Kennis van het boek is essentieel voor het oplossen van puzzels.
               </p>
             </div>
             <div>
               <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mb-3">
                 2
               </div>
-              <p className="text-blue-900 mb-1">Register & Prepare</p>
+              <p className="text-blue-900 mb-1">Registreer & Bereid Voor</p>
               <p className="text-sm text-blue-700">
-                Secure your spot early as spaces are limited. Gather your team of fellow readers.
+                Verzeker je plek vroeg want de plaatsen zijn beperkt. Verzamel je team van medelezers.
               </p>
             </div>
             <div>
               <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mb-3">
                 3
               </div>
-              <p className="text-blue-900 mb-1">Solve the Mystery</p>
+              <p className="text-blue-900 mb-1">Los het Mysterie Op</p>
               <p className="text-sm text-blue-700">
-                Use your literary knowledge to decode clues, solve puzzles, and escape within the time limit.
+                Gebruik je literaire kennis om aanwijzingen te ontcijferen, puzzels op te lossen en te ontsnappen binnen de tijdslimiet.
               </p>
             </div>
           </div>

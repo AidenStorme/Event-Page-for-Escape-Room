@@ -26,9 +26,9 @@ export default function App() {
                 )}
               </div>
               <div>
-                <h1 className="text-slate-900">Riverside Public Library</h1>
+                <h1 className="text-slate-900">Riverside Openbare Bibliotheek</h1>
                 <p className="text-sm text-slate-600">
-                  {currentPage === "escape-rooms" ? "Literary Escape Rooms" : currentPage === "printers" ? "3D Printer Lab" : currentPage === "books" ? "Digital Library" : "Document Printers"}
+                  {currentPage === "escape-rooms" ? "Literaire Escape Rooms" : currentPage === "printers" ? "3D Printer Lab" : currentPage === "books" ? "Digitale Bibliotheek" : "Document Printers"}
                 </p>
               </div>
             </div>
@@ -65,7 +65,7 @@ export default function App() {
                 className={currentPage === "books" ? "bg-purple-600 hover:bg-purple-700" : ""}
               >
                 <BookOpen className="w-4 h-4 mr-2" />
-                Books
+                Boeken
               </Button>
             </div>
           </div>
@@ -83,17 +83,17 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-slate-400 text-sm">
-              © 2025 Riverside Public Library. All rights reserved.
+              © 2025 Riverside Openbare Bibliotheek. Alle rechten voorbehouden.
             </p>
             <div className="flex gap-6 text-sm">
               <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                Contact Us
+                Contacteer Ons
               </a>
               <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                FAQ
+                Veelgestelde Vragen
               </a>
               <a href="#" className="text-slate-400 hover:text-white transition-colors">
-                Library Policies
+                Bibliotheekbeleid
               </a>
             </div>
           </div>

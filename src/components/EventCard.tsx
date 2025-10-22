@@ -38,6 +38,12 @@ export function EventCard({
     Advanced: "bg-red-100 text-red-800 border-red-300",
   };
 
+  const difficultyTranslations = {
+    Beginner: "Beginner",
+    Intermediate: "Gemiddeld",
+    Advanced: "Gevorderd",
+  };
+
   const spotsLow = spotsLeft <= 3;
 
   return (
@@ -52,7 +58,7 @@ export function EventCard({
           />
           <div className="absolute top-4 left-4">
             <Badge className={`${difficultyColors[difficulty]} border`}>
-              {difficulty}
+              {difficultyTranslations[difficulty]}
             </Badge>
           </div>
         </div>
@@ -68,9 +74,9 @@ export function EventCard({
                 <Lock className="w-4 h-4 text-blue-600 mt-1 flex-shrink-0" />
                 <div>
                   <p className="text-sm text-blue-900">
-                    <span className="font-medium">Required Reading:</span> {bookTitle}
+                    <span className="font-medium">Verplichte Lectuur:</span> {bookTitle}
                   </p>
-                  <p className="text-sm text-blue-700">by {bookAuthor}</p>
+                  <p className="text-sm text-blue-700">door {bookAuthor}</p>
                 </div>
               </div>
             </div>
@@ -93,11 +99,11 @@ export function EventCard({
             <div className="flex items-center gap-2 mb-4">
               <Users className="w-4 h-4 text-slate-700" />
               <span className="text-sm text-slate-700">
-                {spotsLeft} of {totalSpots} spots remaining
+                {spotsLeft} van {totalSpots} plaatsen beschikbaar
               </span>
               {spotsLow && (
                 <Badge variant="destructive" className="ml-2">
-                  Almost Full!
+                  Bijna Vol!
                 </Badge>
               )}
             </div>
@@ -107,9 +113,9 @@ export function EventCard({
           <div className="flex gap-3 pt-4 border-t">
             <Button className="flex-1" onClick={onRegister}>
               <BookOpen className="w-4 h-4 mr-2" />
-              Register Now
+              Registreer Nu
             </Button>
-            <Button variant="outline" onClick={onLearnMore}>Learn More</Button>
+            <Button variant="outline" onClick={onLearnMore}>Meer Info</Button>
           </div>
         </div>
       </div>

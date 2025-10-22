@@ -64,7 +64,7 @@ export function EventInfoDialog({
         <DialogHeader>
           <DialogTitle>{event.title}</DialogTitle>
           <DialogDescription>
-            Complete event details and pricing information
+            Volledige evenementdetails en prijsinformatie
           </DialogDescription>
         </DialogHeader>
 
@@ -78,7 +78,7 @@ export function EventInfoDialog({
             />
             <div className="absolute top-4 left-4">
               <Badge className={`${difficultyColors[event.difficulty]} border`}>
-                {event.difficulty}
+                {event.difficulty === "Beginner" ? "Beginner" : event.difficulty === "Intermediate" ? "Gemiddeld" : "Gevorderd"}
               </Badge>
             </div>
           </div>
@@ -89,11 +89,11 @@ export function EventInfoDialog({
               <Lock className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
               <div>
                 <p className="text-blue-900 mb-1">
-                  <span className="font-medium">Required Reading:</span> {event.bookTitle}
+                  <span className="font-medium">Verplichte Lectuur:</span> {event.bookTitle}
                 </p>
-                <p className="text-blue-700">by {event.bookAuthor}</p>
+                <p className="text-blue-700">door {event.bookAuthor}</p>
                 <p className="text-sm text-blue-600 mt-2">
-                  You must have read this book to participate. Plot knowledge is essential for solving the escape room puzzles!
+                  Je moet dit boek gelezen hebben om deel te nemen. Kennis van het plot is essentieel voor het oplossen van de escape room puzzels!
                 </p>
               </div>
             </div>
@@ -101,36 +101,36 @@ export function EventInfoDialog({
 
           {/* Event Details */}
           <div>
-            <h3 className="mb-3">Event Details</h3>
+            <h3 className="mb-3">Evenementdetails</h3>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
                 <Calendar className="w-5 h-5 text-slate-600" />
                 <div>
-                  <p className="text-sm text-slate-600">Date</p>
+                  <p className="text-sm text-slate-600">Datum</p>
                   <p className="text-slate-900">{event.date}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
                 <Clock className="w-5 h-5 text-slate-600" />
                 <div>
-                  <p className="text-sm text-slate-600">Time</p>
+                  <p className="text-sm text-slate-600">Tijd</p>
                   <p className="text-slate-900">{event.time}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
                 <Users className="w-5 h-5 text-slate-600" />
                 <div>
-                  <p className="text-sm text-slate-600">Availability</p>
+                  <p className="text-sm text-slate-600">Beschikbaarheid</p>
                   <p className="text-slate-900">
-                    {event.spotsLeft} of {event.totalSpots} spots left
+                    {event.spotsLeft} van {event.totalSpots} plaatsen over
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
                 <MapPin className="w-5 h-5 text-slate-600" />
                 <div>
-                  <p className="text-sm text-slate-600">Location</p>
-                  <p className="text-slate-900">Library Event Room</p>
+                  <p className="text-sm text-slate-600">Locatie</p>
+                  <p className="text-slate-900">Bibliotheek Evenementenzaal</p>
                 </div>
               </div>
             </div>
@@ -140,7 +140,7 @@ export function EventInfoDialog({
 
           {/* Description */}
           <div>
-            <h3 className="mb-2">About This Event</h3>
+            <h3 className="mb-2">Over Dit Evenement</h3>
             <p className="text-slate-600">{event.description}</p>
           </div>
 
@@ -181,19 +181,19 @@ export function EventInfoDialog({
 
           {/* What to Bring */}
           <div>
-            <h3 className="mb-2">What to Bring</h3>
+            <h3 className="mb-2">Wat Mee Te Nemen</h3>
             <ul className="space-y-2 text-slate-600">
               <li className="flex items-start gap-2">
                 <BookOpen className="w-4 h-4 mt-1 flex-shrink-0" />
-                <span>A thorough understanding of the required book</span>
+                <span>Een grondige kennis van het vereiste boek</span>
               </li>
               <li className="flex items-start gap-2">
                 <Users className="w-4 h-4 mt-1 flex-shrink-0" />
-                <span>Your team spirit and problem-solving skills</span>
+                <span>Je teamgeest en probleemoplossende vaardigheden</span>
               </li>
               <li className="flex items-start gap-2">
                 <Clock className="w-4 h-4 mt-1 flex-shrink-0" />
-                <span>Arrive 10 minutes early for briefing</span>
+                <span>Kom 10 minuten vroeger voor de briefing</span>
               </li>
             </ul>
           </div>
@@ -209,10 +209,10 @@ export function EventInfoDialog({
               }}
             >
               <BookOpen className="w-4 h-4 mr-2" />
-              Register Now
+              Registreer Nu
             </Button>
             <Button variant="outline" size="lg" onClick={() => onOpenChange(false)}>
-              Close
+              Sluiten
             </Button>
           </div>
         </div>

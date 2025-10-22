@@ -86,7 +86,7 @@ export function RegisterDialog({
     if (!isValidGroup || !hasAvailableSpots) return;
     
     // Here you would normally send the booking data to your backend
-    alert(`Booking confirmed!\n\nEvent: ${event.title}\nDate: ${event.date}\nTime: ${event.time}\nGuests: ${numAdults} adults, ${numKids} kids\nTotal: €${totalPrice}\n\nContact: ${firstName} ${lastName}\nEmail: ${email}`);
+    alert(`Boeking bevestigd!\n\nEvenement: ${event.title}\nDatum: ${event.date}\nTijd: ${event.time}\nGasten: ${numAdults} volwassenen, ${numKids} kinderen\nTotaal: €${totalPrice}\n\nContact: ${firstName} ${lastName}\nE-mail: ${email}`);
     
     // Reset form
     setNumAdults(2);
@@ -102,9 +102,9 @@ export function RegisterDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Register for Event</DialogTitle>
+          <DialogTitle>Registreer voor Evenement</DialogTitle>
           <DialogDescription>
-            Complete your booking for {event.title}
+            Voltooi je boeking voor {event.title}
           </DialogDescription>
         </DialogHeader>
 
@@ -120,10 +120,10 @@ export function RegisterDialog({
               <div className="flex items-center gap-2">
                 <span>{event.time}</span>
               </div>
-              <Badge variant="outline">{event.difficulty}</Badge>
+              <Badge variant="outline">{event.difficulty === "Beginner" ? "Beginner" : event.difficulty === "Intermediate" ? "Gemiddeld" : "Gevorderd"}</Badge>
             </div>
             <p className="text-sm text-slate-600">
-              Required Reading: <span className="font-medium">{event.bookTitle}</span> by {event.bookAuthor}
+              Verplichte Lectuur: <span className="font-medium">{event.bookTitle}</span> door {event.bookAuthor}
             </p>
           </div>
 
