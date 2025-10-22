@@ -64,7 +64,7 @@ export function PointsDisplay({ className = "" }: { className?: string }) {
       }
       title={`${points} punten verdiend`}
     >
-      <Coins className="w-4 h-4 text-amber-700" />
+  <Coins className="w-4 h-4 text-amber-600" />
       <span className="tabular-nums" aria-live="polite" aria-atomic="true">{points}</span>
       <span className="hidden sm:inline">punten</span>
     </Badge>
