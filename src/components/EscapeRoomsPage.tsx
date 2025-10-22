@@ -4,8 +4,9 @@ import { EventInfoDialog } from "./EventInfoDialog";
 import { RegisterDialog } from "./RegisterDialog";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { Search, Filter } from "lucide-react";
+import { Search, Filter, Trophy } from "lucide-react";
 import { Input } from "./ui/input";
+import EscapeRoomsLeaderboard from "./EscapeRoomsLeaderboard";
 
 const upcomingEvents = [
   {
@@ -62,6 +63,7 @@ export function EscapeRoomsPage() {
   const [selectedEvent, setSelectedEvent] = useState<typeof upcomingEvents[0] | null>(null);
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
+  const [leaderboardOpen, setLeaderboardOpen] = useState(false);
 
   const handleLearnMore = (event: typeof upcomingEvents[0]) => {
     setSelectedEvent(event);
@@ -93,8 +95,14 @@ export function EscapeRoomsPage() {
               <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50">
                 Bekijk Alle Evenementen
               </Button>
-              <Button size="lg" variant="outline" className="bg-white/20 text-white border-white hover:bg-white/30">
-                Hoe Het Werkt
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="bg-yellow-500/90 text-white border-yellow-600 hover:bg-yellow-600 hover:border-yellow-700"
+                onClick={() => setLeaderboardOpen(true)}
+              >
+                <Trophy className="w-5 h-5 mr-2" />
+                Bekijk Leaderboard
               </Button>
             </div>
           </div>
@@ -156,6 +164,12 @@ export function EscapeRoomsPage() {
           open={registerDialogOpen}
           onOpenChange={setRegisterDialogOpen}
           event={selectedEvent}
+        />
+
+        {/* Leaderboard Dialog */}
+        <EscapeRoomsLeaderboard
+          open={leaderboardOpen}
+          onOpenChange={setLeaderboardOpen}
         />
 
         {/* Info Box */}
