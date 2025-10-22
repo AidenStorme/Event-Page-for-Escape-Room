@@ -4,9 +4,10 @@ import { EventInfoDialog } from "./EventInfoDialog";
 import { RegisterDialog } from "./RegisterDialog";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { Search, Filter, Trophy } from "lucide-react";
+import { Search, Filter, Trophy, Gift } from "lucide-react";
 import { Input } from "./ui/input";
 import EscapeRoomsLeaderboard from "./EscapeRoomsLeaderboard";
+import RewardsDialog from "./RewardsDialog";
 
 const upcomingEvents = [
   {
@@ -64,6 +65,7 @@ export function EscapeRoomsPage() {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
+  const [rewardsOpen, setRewardsOpen] = useState(false);
 
   const handleLearnMore = (event: typeof upcomingEvents[0]) => {
     setSelectedEvent(event);
@@ -103,6 +105,15 @@ export function EscapeRoomsPage() {
               >
                 <Trophy className="w-5 h-5 mr-2" />
                 Bekijk Leaderboard
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="bg-emerald-500/90 text-white border-emerald-600 hover:bg-emerald-600 hover:border-emerald-700"
+                onClick={() => setRewardsOpen(true)}
+              >
+                <Gift className="w-5 h-5 mr-2" />
+                Beloningen
               </Button>
             </div>
           </div>
@@ -171,6 +182,9 @@ export function EscapeRoomsPage() {
           open={leaderboardOpen}
           onOpenChange={setLeaderboardOpen}
         />
+
+        {/* Rewards Dialog */}
+        <RewardsDialog open={rewardsOpen} onOpenChange={setRewardsOpen} />
 
         {/* Info Box */}
         <div className="mt-12 bg-blue-50 border border-blue-200 rounded-lg p-6">

@@ -16,14 +16,22 @@ export function PointsDisplay({ className = "" }: { className?: string }) {
       const raw = window.localStorage.getItem("library_points");
       if (raw == null) {
         // Set a hardcoded default points value on first load
-        const defaultPoints = 125; // hardcoded "random" amount
+        const defaultPoints = 1500; // hardcoded "random" amount
         window.localStorage.setItem("library_points", String(defaultPoints));
         setPoints(defaultPoints);
         // notify any listeners in-tab
         window.dispatchEvent(new CustomEvent("points:update", { detail: defaultPoints }));
       } else {
         const initial = Number(raw);
-        setPoints(Number.isFinite(initial) ? initial : 0);
+        const valid = Number.isFinite(initial) ? initial : 0;
+        // Ensure the user has at least 1500 points as requested
+        if (valid < 1500) {
+          window.localStorage.setItem("library_points", String(1500));
+          setPoints(1500);
+          window.dispatchEvent(new CustomEvent("points:update", { detail: 1500 }));
+        } else {
+          setPoints(valid);
+        }
       }
 
       // Listen for cross-tab updates
@@ -51,13 +59,13 @@ export function PointsDisplay({ className = "" }: { className?: string }) {
   return (
     <Badge
       className={
-        "bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-900 border-yellow-400 shadow-sm h-9 px-4 text-sm flex items-center gap-1 " +
+        "rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-900 border-yellow-400 ring-1 ring-yellow-500/30 shadow-md h-9 px-4 text-sm flex items-center gap-2 transition-transform hover:scale-[1.02] " +
         className
       }
       title={`${points} punten verdiend`}
     >
-      <Coins className="w-4 h-4" />
-      <span className="tabular-nums">{points}</span>
+      <Coins className="w-4 h-4 text-amber-700" />
+      <span className="tabular-nums" aria-live="polite" aria-atomic="true">{points}</span>
       <span className="hidden sm:inline">punten</span>
     </Badge>
   );
