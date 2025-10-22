@@ -4,6 +4,9 @@
   import path from 'path';
 
   export default defineConfig({
+    // IMPORTANT for GitHub Pages project deployment
+    // Use the repository name here so asset URLs resolve correctly
+    base: '/Event-Page-for-Escape-Room/',
     plugins: [react()],
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
