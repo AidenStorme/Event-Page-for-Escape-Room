@@ -14,8 +14,17 @@ export function PointsDisplay({ className = "" }: { className?: string }) {
     // Read initial value from localStorage if available
     if (typeof window !== "undefined") {
       const raw = window.localStorage.getItem("library_points");
-      const initial = raw ? Number(raw) : 0;
-      setPoints(Number.isFinite(initial) ? initial : 0);
+      if (raw == null) {
+        // Set a hardcoded default points value on first load
+        const defaultPoints = 125; // hardcoded "random" amount
+        window.localStorage.setItem("library_points", String(defaultPoints));
+        setPoints(defaultPoints);
+        // notify any listeners in-tab
+        window.dispatchEvent(new CustomEvent("points:update", { detail: defaultPoints }));
+      } else {
+        const initial = Number(raw);
+        setPoints(Number.isFinite(initial) ? initial : 0);
+      }
 
       // Listen for cross-tab updates
       const onStorage = (e: StorageEvent) => {
@@ -24,8 +33,18 @@ export function PointsDisplay({ className = "" }: { className?: string }) {
           setPoints(Number.isFinite(next) ? next : 0);
         }
       };
+      // Listen for same-tab updates via a custom event
+      const onPointsUpdate = (e: Event) => {
+        const custom = e as CustomEvent<number>;
+        const next = typeof custom.detail === "number" ? custom.detail : Number(window.localStorage.getItem("library_points") || 0);
+        setPoints(Number.isFinite(next) ? next : 0);
+      };
       window.addEventListener("storage", onStorage);
-      return () => window.removeEventListener("storage", onStorage);
+      window.addEventListener("points:update", onPointsUpdate as EventListener);
+      return () => {
+        window.removeEventListener("storage", onStorage);
+        window.removeEventListener("points:update", onPointsUpdate as EventListener);
+      };
     }
   }, []);
 
@@ -50,4 +69,22 @@ export function addPoints(amount: number) {
   const current = Number(window.localStorage.getItem("library_points") || 0);
   const next = Math.max(0, (Number.isFinite(current) ? current : 0) + amount);
   window.localStorage.setItem("library_points", String(next));
+  window.dispatchEvent(new CustomEvent("points:update", { detail: next }));
+}
+
+export function setPoints(value: number) {
+  if (typeof window === "undefined") return;
+  const next = Math.max(0, Math.floor(value));
+  window.localStorage.setItem("library_points", String(next));
+  window.dispatchEvent(new CustomEvent("points:update", { detail: next }));
+}
+
+export function setRandomPoints(min = 0, max = 250) {
+  if (typeof window === "undefined") return;
+  const a = Math.floor(min);
+  const b = Math.floor(max);
+  const lo = Math.min(a, b);
+  const hi = Math.max(a, b);
+  const val = Math.floor(Math.random() * (hi - lo + 1)) + lo;
+  setPoints(val);
 }
