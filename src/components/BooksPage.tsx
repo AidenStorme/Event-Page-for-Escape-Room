@@ -5,6 +5,7 @@ import { Input } from "./ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Search, Sparkles, BookOpen, Filter } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { BookDetailDialog } from "./BookDetailDialog";
 
 interface Book {
   id: number;
@@ -19,61 +20,61 @@ interface Book {
 const allBooks: Book[] = [
   {
     id: 1,
-    title: "The Phoenix Project",
-    author: "Gene Kim, Kevin Behr, George Spafford",
-    description: "Een roman over IT, DevOps en het helpen van je bedrijf om te winnen.",
-    coverUrl: "https://covers.openlibrary.org/b/id/8247200-L.jpg",
-    tags: ["DevOps", "IT Management", "Business"],
+    title: "Harry Potter and the Philosopher's Stone",
+    author: "J.K. Rowling",
+    description: "Het eerste boek uit de Harry Potter-serie: de ontdekking van magische werelden en vriendschap.",
+    coverUrl: "src/assets/Harry_Potter_&_De_Steen_Der_Wijzen.jpg",
+    tags: ["Fantasy", "Young Adult"],
     availability: "beschikbaar",
   },
   {
     id: 2,
-    title: "Clean Code",
-    author: "Robert C. Martin",
-    description: "Een handboek over agile software vakmanschap. Een must-read voor elke ontwikkelaar.",
-    coverUrl: "https://covers.openlibrary.org/b/id/8234349-L.jpg",
-    tags: ["Software Engineering", "Programmeren", "Best Practices"],
+    title: "Het Mysterie van de Verzonken Stad",
+    author: "Geronimo Stilton",
+    description: "Een spannend avontuur in de Geronimo Stilton-serie waarin Geronimo een oud mysterie ontrafelt.",
+  coverUrl: "src/assets/Geronimo_Stilton_Het_mysterie_van_de_gezonken_stad.jpg",
+    tags: ["Kinderboek", "Geronimo Stilton"],
     availability: "uitgeleend",
   },
   {
     id: 3,
-    title: "Designing Data-Intensive Applications",
-    author: "Martin Kleppmann",
-    description: "De grote ideeën achter betrouwbare, schaalbare en onderhoudbare systemen.",
-    coverUrl: "https://covers.openlibrary.org/b/id/8259795-L.jpg",
-    tags: ["Systeemontwerp", "Databases", "Architectuur"],
+    title: "Geronimo Stilton: Een muis op de maan",
+    author: "Geronimo Stilton",
+    description: "Een tweede vrolijk en grappig avontuur uit de Geronimo Stilton-serie.",
+  coverUrl: "src/assets/Geronimo_Stilton_een_muis_op_de_maan.jpg",
+    tags: ["Kinderboek", "Geronimo Stilton"],
     availability: "beschikbaar",
   },
   {
     id: 4,
-    title: "The Pragmatic Programmer",
-    author: "Andrew Hunt, David Thomas",
-    description: "Jouw reis naar meesterschap, van gezel tot meester.",
-    coverUrl: "https://covers.openlibrary.org/b/id/9105454-L.jpg",
-    tags: ["Programmeren", "Software Ontwikkeling", "Carrière"],
+    title: "The Hunger Games",
+    author: "Suzanne Collins",
+    description: "Het eerste boek uit de Hunger Games-trilogie: Katniss Everdeen strijdt om te overleven in de Games.",
+  coverUrl: "src/assets/The_Hunger_Games.jpg",
+    tags: ["Dystopie", "Young Adult"],
     availability: "beschikbaar",
   },
   {
     id: 5,
-    title: "Artificial Intelligence: A Modern Approach",
-    author: "Stuart Russell, Peter Norvig",
-    description: "De meest uitgebreide, actuele introductie tot de theorie en praktijk van kunstmatige intelligentie.",
-    coverUrl: "https://covers.openlibrary.org/b/id/10045267-L.jpg",
-    tags: ["AI", "Machine Learning", "Informatica"],
+    title: "Catching Fire",
+    author: "Suzanne Collins",
+    description: "Het tweede boek in de Hunger Games-serie, waarin de nasleep van de Games leidt tot nieuwe conflicten.",
+  coverUrl: "src/assets/Catching_Fire.jpg",
+    tags: ["Dystopie", "Young Adult"],
     availability: "uitgeleend",
   },
   {
     id: 6,
-    title: "Sapiens: A Brief History of Humankind",
-    author: "Yuval Noah Harari",
-    description: "Een baanbrekend verhaal over de schepping en evolutie van de mensheid.",
-    coverUrl: "https://covers.openlibrary.org/b/id/8262032-L.jpg",
-    tags: ["Geschiedenis", "Antropologie", "Wetenschap"],
+    title: "Mockingjay",
+    author: "Suzanne Collins",
+    description: "Het afsluitende deel van de Hunger Games-serie, met de climax van het verzet.",
+  coverUrl: "src/assets/Mockingjay.jpg",
+    tags: ["Dystopie", "Young Adult"],
     availability: "beschikbaar",
   },
 ];
 
-function BookCard({ book }: { book: Book }) {
+function BookCard({ book, onDetails }: { book: Book; onDetails: (b: Book) => void }) {
   return (
     <Card className="overflow-hidden flex flex-col h-full hover:shadow-lg transition-shadow">
       <CardHeader className="p-0 relative">
@@ -101,7 +102,7 @@ function BookCard({ book }: { book: Book }) {
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
-        <Button variant="outline" size="sm" className="w-full">
+        <Button variant="outline" size="sm" className="w-full" onClick={() => onDetails(book)}>
           Bekijk Details
         </Button>
       </CardFooter>
@@ -113,6 +114,8 @@ export function BooksPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [aiQuery, setAiQuery] = useState("");
   const [searchType, setSearchType] = useState<"normal" | "ai">("normal");
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [detailOpen, setDetailOpen] = useState(false);
 
   const filteredBooks = useMemo(() => {
     const query = searchType === "normal" ? searchQuery : aiQuery;
@@ -212,7 +215,7 @@ export function BooksPage() {
         {filteredBooks.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredBooks.map((book) => (
-              <BookCard key={book.id} book={book} />
+              <BookCard key={book.id} book={book} onDetails={(b) => { setSelectedBook(b); setDetailOpen(true); }} />
             ))}
           </div>
         ) : (
@@ -223,6 +226,8 @@ export function BooksPage() {
           </div>
         )}
       </main>
+      {/* Book detail dialog */}
+      <BookDetailDialog open={detailOpen} onOpenChange={setDetailOpen} book={selectedBook} />
     </>
   );
 }
