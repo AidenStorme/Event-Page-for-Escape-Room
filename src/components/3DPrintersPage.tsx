@@ -104,9 +104,9 @@ const printers: Printer[] = [
     imageUrl: "https://uk.anycubic.com/cdn/shop/files/AnycubicPhotonMonoX6Ks_2.jpg?v=1712480585&width=1000",
     description: "Resin printer voor ultragedetailleerde miniaturen en precisieonderdelen. Produceert ongelooflijk gladde oppervlakken met fijne details.",
     filaments: [
-        { name: "Standard Resin", status: "low" },
-        { name: "ABS-like Resin", status: "empty" },
-        { name: "Flexible Resin", status: "good" },
+        { name: "Standard Resin", status: "laag" },
+        { name: "ABS-like Resin", status: "leeg" },
+        { name: "Flexible Resin", status: "goed" },
     ],
   },
 ];

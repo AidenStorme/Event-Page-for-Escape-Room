@@ -13,7 +13,7 @@ interface Book {
   description: string;
   coverUrl: string;
   tags: string[];
-  availability: "available" | "checked-out";
+  availability: "beschikbaar" | "uitgeleend";
 }
 
 const allBooks: Book[] = [
@@ -24,7 +24,7 @@ const allBooks: Book[] = [
     description: "Een roman over IT, DevOps en het helpen van je bedrijf om te winnen.",
     coverUrl: "https://covers.openlibrary.org/b/id/8247200-L.jpg",
     tags: ["DevOps", "IT Management", "Business"],
-    availability: "available",
+    availability: "beschikbaar",
   },
   {
     id: 2,
@@ -33,7 +33,7 @@ const allBooks: Book[] = [
     description: "Een handboek over agile software vakmanschap. Een must-read voor elke ontwikkelaar.",
     coverUrl: "https://covers.openlibrary.org/b/id/8234349-L.jpg",
     tags: ["Software Engineering", "Programmeren", "Best Practices"],
-    availability: "checked-out",
+    availability: "uitgeleend",
   },
   {
     id: 3,
@@ -42,7 +42,7 @@ const allBooks: Book[] = [
     description: "De grote ideeën achter betrouwbare, schaalbare en onderhoudbare systemen.",
     coverUrl: "https://covers.openlibrary.org/b/id/8259795-L.jpg",
     tags: ["Systeemontwerp", "Databases", "Architectuur"],
-    availability: "available",
+    availability: "beschikbaar",
   },
   {
     id: 4,
@@ -51,7 +51,7 @@ const allBooks: Book[] = [
     description: "Jouw reis naar meesterschap, van gezel tot meester.",
     coverUrl: "https://covers.openlibrary.org/b/id/9105454-L.jpg",
     tags: ["Programmeren", "Software Ontwikkeling", "Carrière"],
-    availability: "available",
+    availability: "beschikbaar",
   },
   {
     id: 5,
@@ -60,7 +60,7 @@ const allBooks: Book[] = [
     description: "De meest uitgebreide, actuele introductie tot de theorie en praktijk van kunstmatige intelligentie.",
     coverUrl: "https://covers.openlibrary.org/b/id/10045267-L.jpg",
     tags: ["AI", "Machine Learning", "Informatica"],
-    availability: "checked-out",
+    availability: "uitgeleend",
   },
   {
     id: 6,
@@ -69,7 +69,7 @@ const allBooks: Book[] = [
     description: "Een baanbrekend verhaal over de schepping en evolutie van de mensheid.",
     coverUrl: "https://covers.openlibrary.org/b/id/8262032-L.jpg",
     tags: ["Geschiedenis", "Antropologie", "Wetenschap"],
-    availability: "available",
+    availability: "beschikbaar",
   },
 ];
 
@@ -80,12 +80,12 @@ function BookCard({ book }: { book: Book }) {
         <img src={book.coverUrl} alt={`Omslag van ${book.title}`} className="w-full h-64 object-cover" />
         <Badge 
           className={`absolute top-4 right-4 border ${
-            book.availability === 'available' 
+            book.availability === 'beschikbaar' 
               ? 'bg-green-100 text-green-800 border-green-300' 
               : 'bg-slate-100 text-slate-800 border-slate-300'
           }`}
         >
-          {book.availability === 'available' ? 'Beschikbaar' : 'Uitgeleend'}
+          {book.availability === 'beschikbaar' ? 'Beschikbaar' : 'Uitgeleend'}
         </Badge>
       </CardHeader>
       <CardContent className="p-4 flex-grow flex flex-col">

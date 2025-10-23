@@ -74,7 +74,7 @@ export function PrinterBookingDialog({
     e.preventDefault();
     
     const filamentInfo = is3DPrinter ? `\nFilament: ${selectedFilamentType} - ${selectedColor}` : '';
-    alert(`Booking confirmed!\n\nPrinter: ${printer.name}\nDate: ${date ? format(date, 'PPP') : ''}\nTime: ${timeSlot}${filamentInfo}\n\nContact: ${firstName} ${lastName}\nEmail: ${email}`);
+    alert(`Booking goedgekeurd!\n\nPrinter: ${printer.name}\nDate: ${date ? format(date, 'PPP') : ''}\nTime: ${timeSlot}${filamentInfo}\n\nContact: ${firstName} ${lastName}\nEmail: ${email}`);
     
     // Reset form
     setDate(undefined);

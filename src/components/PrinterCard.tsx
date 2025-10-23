@@ -40,7 +40,7 @@ export function PrinterCard({
           />
           <div className="absolute top-4 left-4">
             <Badge className={available ? "bg-green-100 text-green-800 border-green-300" : "bg-red-100 text-red-800 border-red-300"}>
-              {available ? "Available" : "In Use"}
+              {available ? "Beschikbaar" : "In Gebruik"}
             </Badge>
           </div>
         </div>
@@ -58,14 +58,14 @@ export function PrinterCard({
               <div className="flex items-start gap-2 text-slate-700">
                 <Ruler className="w-4 h-4 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-slate-500">Build Volume</p>
+                  <p className="text-xs text-slate-500">Bouwvolume</p>
                   <p className="text-sm">{buildVolume}</p>
                 </div>
               </div>
               <div className="flex items-start gap-2 text-slate-700">
                 <Layers className="w-4 h-4 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-slate-500">Layer Resolution</p>
+                  <p className="text-xs text-slate-500">Laagresolutie</p>
                   <p className="text-sm">{layerResolution}</p>
                 </div>
               </div>
@@ -73,7 +73,7 @@ export function PrinterCard({
 
             {/* Materials */}
             <div className="mb-4">
-              <p className="text-sm text-slate-700 mb-2">Supported Materials:</p>
+              <p className="text-sm text-slate-700 mb-2">Ondersteunde Materialen:</p>
               <div className="flex flex-wrap gap-2">
                 {materials.map((material, index) => (
                   <Badge key={index} variant="outline">
@@ -92,9 +92,9 @@ export function PrinterCard({
               onClick={onBookNow}
             >
               <Printer className="w-4 h-4 mr-2" />
-              {available ? "Book Time Slot" : "Currently Unavailable"}
+              {available ? "Reserveer Tijdslot" : "Momenteel Niet Beschikbaar"}
             </Button>
-            <Button variant="outline" onClick={onViewDetails}>View Details</Button>
+            <Button variant="outline" onClick={onViewDetails}>Bekijk Details</Button>
           </div>
         </div>
       </div>

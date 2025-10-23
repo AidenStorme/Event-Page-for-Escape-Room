@@ -29,7 +29,7 @@ interface EventInfoDialogProps {
     time: string;
     spotsLeft: number;
     totalSpots: number;
-    difficulty: "Beginner" | "Intermediate" | "Advanced";
+    difficulty: "Beginner" | "Gematigd" | "Gevorderd";
     description: string;
     imageUrl: string;
   } | null;
@@ -52,10 +52,10 @@ export function EventInfoDialog({
 }: EventInfoDialogProps) {
   if (!event) return null;
 
-  const difficultyColors = {
+  const difficultyColors: Record<"Beginner" | "Gematigd" | "Gevorderd", string> = {
     Beginner: "bg-green-100 text-green-800 border-green-300",
-    Intermediate: "bg-amber-100 text-amber-800 border-amber-300",
-    Advanced: "bg-red-100 text-red-800 border-red-300",
+    Gematigd: "bg-amber-100 text-amber-800 border-amber-300",
+    Gevorderd: "bg-red-100 text-red-800 border-red-300",
   };
 
   return (
@@ -78,7 +78,7 @@ export function EventInfoDialog({
             />
             <div className="absolute top-4 left-4">
               <Badge className={`${difficultyColors[event.difficulty]} border`}>
-                {event.difficulty === "Beginner" ? "Beginner" : event.difficulty === "Intermediate" ? "Gemiddeld" : "Gevorderd"}
+                {event.difficulty === "Beginner" ? "Beginner" : event.difficulty === "Gematigd" ? "Gematigd" : "Gevorderd"}
               </Badge>
             </div>
           </div>

@@ -11,7 +11,7 @@ interface EventCardProps {
   time: string;
   spotsLeft: number;
   totalSpots: number;
-  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  difficulty: "Beginner" | "Gematigd" | "Gevorderd";
   description: string;
   imageUrl: string;
   onLearnMore?: () => void;
@@ -32,16 +32,16 @@ export function EventCard({
   onLearnMore,
   onRegister,
 }: EventCardProps) {
-  const difficultyColors = {
+  const difficultyColors: Record<"Beginner" | "Gematigd" | "Gevorderd", string> = {
     Beginner: "bg-green-100 text-green-800 border-green-300",
-    Intermediate: "bg-amber-100 text-amber-800 border-amber-300",
-    Advanced: "bg-red-100 text-red-800 border-red-300",
+    Gematigd: "bg-amber-100 text-amber-800 border-amber-300",
+    Gevorderd: "bg-red-100 text-red-800 border-red-300",
   };
 
-  const difficultyTranslations = {
+  const difficultyTranslations: Record<"Beginner" | "Gematigd" | "Gevorderd", string> = {
     Beginner: "Beginner",
-    Intermediate: "Gemiddeld",
-    Advanced: "Gevorderd",
+    Gematigd: "Gematigd",
+    Gevorderd: "Gevorderd",
   };
 
   const spotsLow = spotsLeft <= 3;

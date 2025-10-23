@@ -32,7 +32,7 @@ interface RegisterDialogProps {
     date: string;
     time: string;
     spotsLeft: number;
-    difficulty: "Beginner" | "Intermediate" | "Advanced";
+    difficulty: "Beginner" | "Gematigd" | "Gevorderd";
   } | null;
 }
 
@@ -129,7 +129,7 @@ export function RegisterDialog({
               <div className="flex items-center gap-2">
                 <span>{event.time}</span>
               </div>
-              <Badge variant="outline">{event.difficulty === "Beginner" ? "Beginner" : event.difficulty === "Intermediate" ? "Gemiddeld" : "Gevorderd"}</Badge>
+              <Badge variant="outline">{event.difficulty === "Beginner" ? "Beginner" : event.difficulty === "Gematigd" ? "Gematigd" : "Gevorderd"}</Badge>
             </div>
             <p className="text-sm text-slate-600">
               Verplichte Lectuur: <span className="font-medium">{event.bookTitle}</span> door {event.bookAuthor}
