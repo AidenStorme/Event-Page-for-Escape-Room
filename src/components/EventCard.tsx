@@ -111,9 +111,14 @@ export function EventCard({
 
           {/* Action Button */}
           <div className="flex gap-3 pt-4 border-t">
-            <Button className="flex-1" onClick={onRegister}>
-              <BookOpen className="w-4 h-4 mr-2" />
-              Registreer Nu
+            <Button className="flex-1 flex items-center justify-center" onClick={onRegister}>
+              <div className="flex items-center">
+                <BookOpen className="w-4 h-4 mr-2" />
+                <span>Registreer Nu</span>
+              </div>
+              <span className="ml-3 inline-flex items-center text-amber-600 bg-amber-50 border border-amber-100 rounded-full px-2 py-0.5 text-xs font-medium">
+                +25 punten
+              </span>
             </Button>
             <Button variant="outline" onClick={onLearnMore}>Meer Info</Button>
           </div>

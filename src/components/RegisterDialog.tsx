@@ -93,6 +93,8 @@ export function RegisterDialog({
     // This can be adjusted or moved to a backend integration later
     try {
       addPoints(25);
+      // Give a lightweight confirmation to the user
+      alert(`Je hebt 25 punten verdiend! Je totaal staat bijgewerkt.`);
     } catch {}
     
     // Reset form
@@ -325,6 +327,9 @@ export function RegisterDialog({
               disabled={!isValidGroup || !hasAvailableSpots || !firstName || !lastName || !email || !phone}
             >
               Bevestig Boeking - €{totalPrice}
+              <span className="ml-3 inline-flex items-center text-amber-600 bg-amber-50 border border-amber-100 rounded-full px-2 py-0.5 text-xs font-medium">
+                +25 punten
+              </span>
             </Button>
             <Button
               type="button"
