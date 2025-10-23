@@ -22,6 +22,14 @@ import { Calendar, Users, Euro, Mail, Phone, User, AlertCircle } from "lucide-re
 import { Alert, AlertDescription } from "./ui/alert";
 import { addPoints } from "./PointsDisplay";
 
+interface TimeSlot {
+  id: string;
+  time: string;
+  spotsLeft: number;
+  totalSpots: number;
+  isFull: boolean;
+}
+
 interface RegisterDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -30,10 +38,11 @@ interface RegisterDialogProps {
     bookTitle: string;
     bookAuthor: string;
     date: string;
-    time: string;
+    time?: string;
     spotsLeft: number;
     difficulty: "Beginner" | "Gematigd" | "Gevorderd";
   } | null;
+  timeSlot?: TimeSlot | null;
 }
 
 const pricingRules = [
@@ -62,6 +71,7 @@ export function RegisterDialog({
   open,
   onOpenChange,
   event,
+  timeSlot,
 }: RegisterDialogProps) {
   const [numAdults, setNumAdults] = useState(2);
   const [numKids, setNumKids] = useState(0);
@@ -79,7 +89,8 @@ export function RegisterDialog({
 
   const totalPeople = numAdults + numKids;
   const isValidGroup = totalPeople >= 2 && totalPeople <= 8;
-  const hasAvailableSpots = totalPeople <= event.spotsLeft;
+  const availableSpots = timeSlot ? timeSlot.spotsLeft : event.spotsLeft;
+  const hasAvailableSpots = totalPeople <= availableSpots;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,7 +98,8 @@ export function RegisterDialog({
     if (!isValidGroup || !hasAvailableSpots) return;
     
     // Here you would normally send the booking data to your backend
-    alert(`Boeking bevestigd!\n\nEvenement: ${event.title}\nDatum: ${event.date}\nTijd: ${event.time}\nGasten: ${numAdults} volwassenen, ${numKids} kinderen\nTotaal: €${totalPrice}\n\nContact: ${firstName} ${lastName}\nE-mail: ${email}`);
+    const selectedTime = timeSlot ? timeSlot.time : event.time;
+    alert(`Boeking bevestigd!\n\nEvenement: ${event.title}\nDatum: ${event.date}\nTijd: ${selectedTime}\nGasten: ${numAdults} volwassenen, ${numKids} kinderen\nTotaal: €${totalPrice}\n\nContact: ${firstName} ${lastName}\nE-mail: ${email}`);
 
     // Award a small number of points for a successful registration
     // This can be adjusted or moved to a backend integration later
@@ -127,10 +139,18 @@ export function RegisterDialog({
                 <span>{event.date}</span>
               </div>
               <div className="flex items-center gap-2">
-                <span>{event.time}</span>
+                <span>{timeSlot ? timeSlot.time : event.time}</span>
               </div>
               <Badge variant="outline">{event.difficulty === "Beginner" ? "Beginner" : event.difficulty === "Gematigd" ? "Gematigd" : "Gevorderd"}</Badge>
             </div>
+            {timeSlot && (
+              <div className="flex items-center gap-2 text-sm">
+                <Users className="w-4 h-4 text-slate-600" />
+                <span className="text-slate-600">
+                  {timeSlot.spotsLeft} van {timeSlot.totalSpots} plaatsen beschikbaar
+                </span>
+              </div>
+            )}
             <p className="text-sm text-slate-600">
               Verplichte Lectuur: <span className="font-medium">{event.bookTitle}</span> door {event.bookAuthor}
             </p>

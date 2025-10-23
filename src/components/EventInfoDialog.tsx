@@ -26,7 +26,7 @@ interface EventInfoDialogProps {
     bookTitle: string;
     bookAuthor: string;
     date: string;
-    time: string;
+    time?: string;
     spotsLeft: number;
     totalSpots: number;
     difficulty: "Beginner" | "Gematigd" | "Gevorderd";

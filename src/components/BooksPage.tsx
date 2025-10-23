@@ -6,6 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { Search, Sparkles, BookOpen, Filter } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { BookDetailDialog } from "./BookDetailDialog";
+import { BookReserveDialog } from "./BookReserveDialog";
 
 // Import images so Vite processes them for production (GitHub Pages)
 import HarryCover from "../assets/Harry_Potter_&_De_Steen_Der_Wijzen.jpg";
@@ -100,7 +101,7 @@ const formatPrice = (value: number) =>
     minimumFractionDigits: 2,
   }).format(value);
 
-function BookCard({ book, onDetails }: { book: Book; onDetails: (b: Book) => void }) {
+function BookCard({ book, onDetails, onReserve }: { book: Book; onDetails: (b: Book) => void; onReserve: (b: Book) => void }) {
   return (
     <Card
       className={`overflow-hidden flex flex-col h-full hover:shadow-lg transition-all duration-300 ${book.onSale ? 'border-rose-300' : ''}`}
@@ -173,9 +174,17 @@ function BookCard({ book, onDetails }: { book: Book; onDetails: (b: Book) => voi
           ))}
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0">
-        <Button variant="outline" size="sm" className="w-full" onClick={() => onDetails(book)}>
-          Bekijk Details
+      <CardFooter className="p-4 pt-0 flex gap-2">
+        <Button variant="outline" size="sm" className="flex-1" onClick={() => onDetails(book)}>
+          Details
+        </Button>
+        <Button 
+          size="sm" 
+          className="flex-1" 
+          onClick={() => onReserve(book)}
+          disabled={book.availability === "uitgeleend"}
+        >
+          {book.availability === "uitgeleend" ? "Uitgeleend" : "Leen"}
         </Button>
       </CardFooter>
     </Card>
@@ -188,6 +197,7 @@ export function BooksPage() {
   const [searchType, setSearchType] = useState<"normal" | "ai">("normal");
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
+  const [reserveDialogOpen, setReserveDialogOpen] = useState(false);
 
   const filteredBooks = useMemo(() => {
     const query = searchType === "normal" ? searchQuery : aiQuery;
@@ -287,7 +297,12 @@ export function BooksPage() {
         {filteredBooks.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredBooks.map((book) => (
-              <BookCard key={book.id} book={book} onDetails={(b) => { setSelectedBook(b); setDetailOpen(true); }} />
+              <BookCard 
+                key={book.id} 
+                book={book} 
+                onDetails={(b) => { setSelectedBook(b); setDetailOpen(true); }}
+                onReserve={(b) => { setSelectedBook(b); setReserveDialogOpen(true); }}
+              />
             ))}
           </div>
         ) : (
@@ -300,6 +315,9 @@ export function BooksPage() {
       </main>
       {/* Book detail dialog */}
       <BookDetailDialog open={detailOpen} onOpenChange={setDetailOpen} book={selectedBook} />
+      
+      {/* Book reservation dialog */}
+      <BookReserveDialog open={reserveDialogOpen} onOpenChange={setReserveDialogOpen} book={selectedBook} />
     </>
   );
 }

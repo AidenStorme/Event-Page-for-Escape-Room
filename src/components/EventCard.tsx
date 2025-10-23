@@ -3,19 +3,28 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Calendar, Clock, Users, BookOpen, Lock } from "lucide-react";
 
+interface TimeSlot {
+  id: string;
+  time: string;
+  spotsLeft: number;
+  totalSpots: number;
+  isFull: boolean;
+}
+
 interface EventCardProps {
   title: string;
   bookTitle: string;
   bookAuthor: string;
   date: string;
-  time: string;
+  time?: string;
   spotsLeft: number;
   totalSpots: number;
   difficulty: "Beginner" | "Gematigd" | "Gevorderd";
   description: string;
   imageUrl: string;
+  timeSlots?: TimeSlot[];
   onLearnMore?: () => void;
-  onRegister?: () => void;
+  onRegister?: (timeSlot?: TimeSlot) => void;
 }
 
 export function EventCard({
@@ -29,6 +38,7 @@ export function EventCard({
   difficulty,
   description,
   imageUrl,
+  timeSlots,
   onLearnMore,
   onRegister,
 }: EventCardProps) {
@@ -84,43 +94,86 @@ export function EventCard({
             <p className="text-slate-600 mb-4">{description}</p>
 
             {/* Event Details */}
-            <div className="grid sm:grid-cols-2 gap-3 mb-4">
+            <div className="mb-4">
               <div className="flex items-center gap-2 text-slate-700">
                 <Calendar className="w-4 h-4" />
                 <span className="text-sm">{date}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-700">
-                <Clock className="w-4 h-4" />
-                <span className="text-sm">{time}</span>
-              </div>
             </div>
 
-            {/* Spots Available */}
-            <div className="flex items-center gap-2 mb-4">
-              <Users className="w-4 h-4 text-slate-700" />
-              <span className="text-sm text-slate-700">
-                {spotsLeft} van {totalSpots} plaatsen beschikbaar
-              </span>
-              {spotsLow && (
-                <Badge variant="destructive" className="ml-2">
-                  Bijna Vol!
-                </Badge>
-              )}
-            </div>
+            {/* Time Slots */}
+            {timeSlots && timeSlots.length > 0 ? (
+              <div className="mb-4">
+                <p className="text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
+                  Beschikbare Tijdsloten:
+                </p>
+                <div className="grid grid-cols-1 gap-2">
+                  {timeSlots.map((slot) => (
+                    <div
+                      key={slot.id}
+                      className={`flex items-center justify-between p-3 rounded-lg border transition-all ${
+                        slot.isFull
+                          ? 'bg-slate-50 border-slate-200'
+                          : 'bg-white border-slate-200 hover:border-blue-300 hover:bg-blue-50/50'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Clock className="w-4 h-4 text-slate-600" />
+                        <span className="text-sm font-medium text-slate-900">{slot.time}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-1">
+                          <Users className="w-4 h-4 text-slate-600" />
+                          <span className="text-sm text-slate-600">
+                            {slot.spotsLeft}/{slot.totalSpots}
+                          </span>
+                        </div>
+                        {slot.spotsLeft <= 3 && !slot.isFull && (
+                          <Badge variant="destructive" className="text-xs">Bijna Vol</Badge>
+                        )}
+                        <Button 
+                          size="sm" 
+                          onClick={() => onRegister?.(slot)}
+                          className="text-xs h-8"
+                          disabled={slot.isFull}
+                        >
+                          {slot.isFull ? 'Vol' : 'Reserveer'}
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 mb-4">
+                <Users className="w-4 h-4 text-slate-700" />
+                <span className="text-sm text-slate-700">
+                  {spotsLeft} van {totalSpots} plaatsen beschikbaar
+                </span>
+                {spotsLow && (
+                  <Badge variant="destructive" className="ml-2">
+                    Bijna Vol!
+                  </Badge>
+                )}
+              </div>
+            )}
           </div>
 
-          {/* Action Button */}
+          {/* Action Buttons */}
           <div className="flex gap-3 pt-4 border-t">
-            <Button className="flex-1 flex items-center justify-center" onClick={onRegister}>
-              <div className="flex items-center">
-                <BookOpen className="w-4 h-4 mr-2" />
-                <span>Registreer Nu</span>
-              </div>
-              <span className="ml-3 inline-flex items-center text-amber-600 bg-amber-50 border border-amber-100 rounded-full px-2 py-0.5 text-xs font-medium">
-                +25 punten
-              </span>
-            </Button>
-            <Button variant="outline" onClick={onLearnMore}>Meer Info</Button>
+            {!timeSlots || timeSlots.length === 0 ? (
+              <Button className="flex-1 flex items-center justify-center" onClick={() => onRegister?.()}>
+                <div className="flex items-center">
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  <span>Registreer Nu</span>
+                </div>
+                <span className="ml-3 inline-flex items-center text-amber-600 bg-amber-50 border border-amber-100 rounded-full px-2 py-0.5 text-xs font-medium">
+                  +25 punten
+                </span>
+              </Button>
+            ) : null}
+            <Button variant="outline" onClick={onLearnMore} className={timeSlots && timeSlots.length > 0 ? 'flex-1' : ''}>Meer Info</Button>
           </div>
         </div>
       </div>

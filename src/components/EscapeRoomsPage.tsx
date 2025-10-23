@@ -11,71 +11,100 @@ import RewardsDialog from "./RewardsDialog";
 import silentPatientImg from "../assets/the-silent-patient.jpg";
 import HarryPotterImg from "../assets/Harry_Potter_&_De_Steen_Der_Wijzen.jpg";
 
+interface TimeSlot {
+  id: string;
+  time: string;
+  spotsLeft: number;
+  totalSpots: number;
+  isFull: boolean;
+}
+
 const upcomingEvents = [
   {
-    title: "Harry Potter & De Steen der Wijzen",
-    bookTitle: "Harry Potter and the Philosopher's Stone",
+    title: "Het Raadsel van Zweinstein: Een Magisch Avontuur",
+    bookTitle: "Harry Potter & De Steen der Wijzen",
     bookAuthor: "J.K. Rowling",
     date: "25 oktober 2025",
-    time: "18:30 - 21:00",
     spotsLeft: 10,
     totalSpots: 12,
-  difficulty: "Gematigd" as const,
+    difficulty: "Gematigd" as const,
     description: "Betreed Zweinstein en los magische puzzels op geïnspireerd door Harry's eerste avontuur. Perfect voor fans die zich willen verdiepen in toverkunsten en mysteries.",
     imageUrl: HarryPotterImg,
+    timeSlots: [
+      { id: "hp-1", time: "14:00 - 16:30", spotsLeft: 8, totalSpots: 12, isFull: false },
+      { id: "hp-2", time: "17:00 - 19:30", spotsLeft: 3, totalSpots: 12, isFull: false },
+      { id: "hp-3", time: "20:00 - 22:30", spotsLeft: 0, totalSpots: 12, isFull: true },
+    ],
   },
   {
     title: "Moord in het Landhuis: Een Gotisch Mysterie",
     bookTitle: "The Silent Patient",
     bookAuthor: "Alex Michaelides",
     date: "2 november 2025",
-    time: "18:00 - 20:30",
     spotsLeft: 2,
     totalSpots: 8,
-  difficulty: "Gevorderd" as const,
+    difficulty: "Gevorderd" as const,
     description: "Ontrafel de geheimen van Thornfield Manor waar een misdaad de fundamenten heeft doen schudden. Gebruik je kennis van The Silent Patient om psychologische aanwijzingen te ontcijferen en de moordenaar te ontmaskeren.",
-  imageUrl: silentPatientImg,
+    imageUrl: silentPatientImg,
+    timeSlots: [
+      { id: "sp-1", time: "15:00 - 17:30", spotsLeft: 4, totalSpots: 8, isFull: false },
+      { id: "sp-2", time: "18:00 - 20:30", spotsLeft: 2, totalSpots: 8, isFull: false },
+      { id: "sp-3", time: "21:00 - 23:30", spotsLeft: 0, totalSpots: 8, isFull: true },
+    ],
   },
   {
     title: "De Merkwaardige Zaak van het Vermiste Manuscript",
     bookTitle: "The Adventures of Sherlock Holmes",
     bookAuthor: "Arthur Conan Doyle",
     date: "9 november 2025",
-    time: "15:00 - 17:30",
     spotsLeft: 6,
     totalSpots: 10,
-  difficulty: "Gematigd" as const,
+    difficulty: "Gematigd" as const,
     description: "Stap het Victoriaanse Londen binnen en los een literair mysterie op dat Baker Street waardig is. Pas Holmes' deductieve redeneermethoden toe om een onbetaalbaar gestolen manuscript terug te vinden.",
     imageUrl: "https://images.unsplash.com/photo-1650178284536-2d6dff47f903?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXRlY3RpdmUlMjBib29rJTIwdmludGFnZXxlbnwxfHx8fDE3NjEwMzQ4NjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    timeSlots: [
+      { id: "sh-1", time: "13:00 - 15:30", spotsLeft: 6, totalSpots: 10, isFull: false },
+      { id: "sh-2", time: "16:00 - 18:30", spotsLeft: 4, totalSpots: 10, isFull: false },
+      { id: "sh-3", time: "19:00 - 21:30", spotsLeft: 10, totalSpots: 10, isFull: false },
+    ],
   },
   {
     title: "De Betoverde Bibliotheek Overval",
     bookTitle: "The Night Circus",
     bookAuthor: "Erin Morgenstern",
     date: "16 november 2025",
-    time: "19:00 - 21:00",
     spotsLeft: 8,
     totalSpots: 12,
     difficulty: "Beginner" as const,
     description: "Navigeer door magische puzzels en illusoire uitdagingen geïnspireerd door The Night Circus. Perfect voor beginnende escape room avonturiers met een liefde voor grillige mysteries.",
     imageUrl: "https://images.unsplash.com/photo-1658792953327-e3c9e7223e92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaWJyYXJ5JTIwYm9va3MlMjBteXN0ZXJ5fGVufDF8fHx8MTc2MTAzNDg2Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+    timeSlots: [
+      { id: "nc-1", time: "14:30 - 16:30", spotsLeft: 8, totalSpots: 12, isFull: false },
+      { id: "nc-2", time: "17:00 - 19:00", spotsLeft: 5, totalSpots: 12, isFull: false },
+      { id: "nc-3", time: "19:30 - 21:30", spotsLeft: 2, totalSpots: 12, isFull: false },
+    ],
   },
   {
     title: "De Vergiftigde Pen Genootschap",
     bookTitle: "And Then There Were None",
     bookAuthor: "Agatha Christie",
     date: "23 november 2025",
-    time: "17:30 - 20:00",
     spotsLeft: 1,
     totalSpots: 8,
-  difficulty: "Gevorderd" as const,
+    difficulty: "Gevorderd" as const,
     description: "Sluit je aan bij een exclusieve bijeenkomst van een literair genootschap die dodelijk afloopt. Kanaliseer je innerlijke Agatha Christie om de moordenaar te identificeren tussen een cast van verdachte personages.",
     imageUrl: "https://images.unsplash.com/photo-1569002925653-ed18f55d7292?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlc2NhcGUlMjByb29tJTIwbXlzdGVyeXxlbnwxfHx8fDE3NjEwMzQ4NjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    timeSlots: [
+      { id: "ac-1", time: "15:00 - 17:30", spotsLeft: 1, totalSpots: 8, isFull: false },
+      { id: "ac-2", time: "18:00 - 20:30", spotsLeft: 0, totalSpots: 8, isFull: true },
+      { id: "ac-3", time: "21:00 - 23:30", spotsLeft: 3, totalSpots: 8, isFull: false },
+    ],
   },
 ];
 
 export function EscapeRoomsPage() {
   const [selectedEvent, setSelectedEvent] = useState<typeof upcomingEvents[0] | null>(null);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(null);
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
@@ -86,8 +115,9 @@ export function EscapeRoomsPage() {
     setInfoDialogOpen(true);
   };
 
-  const handleRegister = (event: typeof upcomingEvents[0]) => {
+  const handleRegister = (event: typeof upcomingEvents[0], timeSlot?: TimeSlot) => {
     setSelectedEvent(event);
+    setSelectedTimeSlot(timeSlot || null);
     setRegisterDialogOpen(true);
   };
 
@@ -168,7 +198,7 @@ export function EscapeRoomsPage() {
               key={index} 
               {...event} 
               onLearnMore={() => handleLearnMore(event)}
-              onRegister={() => handleRegister(event)}
+              onRegister={(timeSlot) => handleRegister(event, timeSlot)}
             />
           ))}
         </div>
@@ -189,6 +219,7 @@ export function EscapeRoomsPage() {
           open={registerDialogOpen}
           onOpenChange={setRegisterDialogOpen}
           event={selectedEvent}
+          timeSlot={selectedTimeSlot}
         />
 
         {/* Leaderboard Dialog */}
