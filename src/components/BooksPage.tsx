@@ -28,7 +28,7 @@ interface Book {
 const allBooks: Book[] = [
   {
     id: 1,
-    title: "Harry Potter and the Philosopher's Stone",
+    title: "Harry Potter & de Steen der Wijzen",
     author: "J.K. Rowling",
     description: "Het eerste boek uit de Harry Potter-serie: de ontdekking van magische werelden en vriendschap.",
     coverUrl: HarryCover,
