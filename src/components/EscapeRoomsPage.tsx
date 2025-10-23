@@ -8,8 +8,22 @@ import { Search, Filter, Trophy, Gift } from "lucide-react";
 import { Input } from "./ui/input";
 import EscapeRoomsLeaderboard from "./EscapeRoomsLeaderboard";
 import RewardsDialog from "./RewardsDialog";
+import silentPatientImg from "../assets/the-silent-patient.jpg";
+import HarryPotterImg from "../assets/Harry_Potter_&_De_Steen_Der_Wijzen.jpg";
 
 const upcomingEvents = [
+  {
+    title: "Harry Potter & De Steen der Wijzen",
+    bookTitle: "Harry Potter and the Philosopher's Stone",
+    bookAuthor: "J.K. Rowling",
+    date: "25 oktober 2025",
+    time: "18:30 - 21:00",
+    spotsLeft: 10,
+    totalSpots: 12,
+    difficulty: "Intermediate" as const,
+    description: "Betreed Zweinstein en los magische puzzels op geïnspireerd door Harry's eerste avontuur. Perfect voor fans die zich willen verdiepen in toverkunsten en mysteries.",
+    imageUrl: HarryPotterImg,
+  },
   {
     title: "Moord in het Landhuis: Een Gotisch Mysterie",
     bookTitle: "The Silent Patient",
@@ -20,7 +34,7 @@ const upcomingEvents = [
     totalSpots: 8,
     difficulty: "Advanced" as const,
     description: "Ontrafel de geheimen van Thornfield Manor waar een misdaad de fundamenten heeft doen schudden. Gebruik je kennis van The Silent Patient om psychologische aanwijzingen te ontcijferen en de moordenaar te ontmaskeren.",
-    imageUrl: "https://images.unsplash.com/photo-1569002925653-ed18f55d7292?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlc2NhcGUlMjByb29tJTIwbXlzdGVyeXxlbnwxfHx8fDE3NjEwMzQ4NjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  imageUrl: silentPatientImg,
   },
   {
     title: "De Merkwaardige Zaak van het Vermiste Manuscript",
