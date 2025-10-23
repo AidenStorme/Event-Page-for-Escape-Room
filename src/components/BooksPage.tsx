@@ -7,6 +7,14 @@ import { Search, Sparkles, BookOpen, Filter } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { BookDetailDialog } from "./BookDetailDialog";
 
+// Import images so Vite processes them for production (GitHub Pages)
+import HarryCover from "../assets/Harry_Potter_&_De_Steen_Der_Wijzen.jpg";
+import GeronimoGezonken from "../assets/Geronimo_Stilton_Het_mysterie_van_de_gezonken_stad.jpg";
+import GeronimoMaan from "../assets/Geronimo_Stilton_een_muis_op_de_maan.jpg";
+import HungerGames from "../assets/The_Hunger_Games.jpg";
+import CatchingFire from "../assets/Catching_Fire.jpg";
+import Mockingjay from "../assets/Mockingjay.jpg";
+
 interface Book {
   id: number;
   title: string;
@@ -23,7 +31,7 @@ const allBooks: Book[] = [
     title: "Harry Potter and the Philosopher's Stone",
     author: "J.K. Rowling",
     description: "Het eerste boek uit de Harry Potter-serie: de ontdekking van magische werelden en vriendschap.",
-    coverUrl: "src/assets/Harry_Potter_&_De_Steen_Der_Wijzen.jpg",
+    coverUrl: HarryCover,
     tags: ["Fantasy", "Young Adult"],
     availability: "beschikbaar",
   },
@@ -32,7 +40,7 @@ const allBooks: Book[] = [
     title: "Het Mysterie van de Verzonken Stad",
     author: "Geronimo Stilton",
     description: "Een spannend avontuur in de Geronimo Stilton-serie waarin Geronimo een oud mysterie ontrafelt.",
-  coverUrl: "src/assets/Geronimo_Stilton_Het_mysterie_van_de_gezonken_stad.jpg",
+  coverUrl: GeronimoGezonken,
     tags: ["Kinderboek", "Geronimo Stilton"],
     availability: "uitgeleend",
   },
@@ -41,7 +49,7 @@ const allBooks: Book[] = [
     title: "Geronimo Stilton: Een muis op de maan",
     author: "Geronimo Stilton",
     description: "Een tweede vrolijk en grappig avontuur uit de Geronimo Stilton-serie.",
-  coverUrl: "src/assets/Geronimo_Stilton_een_muis_op_de_maan.jpg",
+  coverUrl: GeronimoMaan,
     tags: ["Kinderboek", "Geronimo Stilton"],
     availability: "beschikbaar",
   },
@@ -50,7 +58,7 @@ const allBooks: Book[] = [
     title: "The Hunger Games",
     author: "Suzanne Collins",
     description: "Het eerste boek uit de Hunger Games-trilogie: Katniss Everdeen strijdt om te overleven in de Games.",
-  coverUrl: "src/assets/The_Hunger_Games.jpg",
+  coverUrl: HungerGames,
     tags: ["Dystopie", "Young Adult"],
     availability: "beschikbaar",
   },
@@ -59,7 +67,7 @@ const allBooks: Book[] = [
     title: "Catching Fire",
     author: "Suzanne Collins",
     description: "Het tweede boek in de Hunger Games-serie, waarin de nasleep van de Games leidt tot nieuwe conflicten.",
-  coverUrl: "src/assets/Catching_Fire.jpg",
+  coverUrl: CatchingFire,
     tags: ["Dystopie", "Young Adult"],
     availability: "uitgeleend",
   },
@@ -68,7 +76,7 @@ const allBooks: Book[] = [
     title: "Mockingjay",
     author: "Suzanne Collins",
     description: "Het afsluitende deel van de Hunger Games-serie, met de climax van het verzet.",
-  coverUrl: "src/assets/Mockingjay.jpg",
+  coverUrl: Mockingjay,
     tags: ["Dystopie", "Young Adult"],
     availability: "beschikbaar",
   },
