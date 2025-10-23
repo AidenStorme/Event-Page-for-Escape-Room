@@ -102,23 +102,31 @@ const formatPrice = (value: number) =>
 
 function BookCard({ book, onDetails }: { book: Book; onDetails: (b: Book) => void }) {
   return (
-    <Card className={`overflow-hidden flex flex-col h-full hover:shadow-lg transition-shadow ${
-      book.featuredInEscapeRoom 
-        ? 'border-2 border-transparent bg-gradient-to-br from-indigo-50 via-white to-violet-50 ring-2 ring-violet-400 ring-offset-2 shadow-xl shadow-violet-200/50' 
-        : book.onSale 
-        ? 'border-2 border-rose-400 shadow-rose-100' 
-        : ''
-    }`}>
+    <Card
+      className={`overflow-hidden flex flex-col h-full hover:shadow-lg transition-all duration-300 ${book.onSale ? 'border-rose-300' : ''}`}
+      style={book.featuredInEscapeRoom ? {
+        border: '3px solid #d97706',
+        boxShadow: '0 20px 60px -15px rgba(217, 119, 6, 0.5), 0 0 0 1px rgba(217, 119, 6, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.7)',
+        background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 25%, #fde68a 50%, #fef3c7 75%, #fffbeb 100%)',
+        transform: 'translateY(-2px)'
+      } : {}}
+    >
       <CardHeader className="p-0 relative">
         <img src={book.coverUrl} alt={`Omslag van ${book.title}`} className="w-full h-64 object-cover" />
         <div className="absolute top-4 left-4 z-10 flex flex-col gap-2 items-start">
           {book.featuredInEscapeRoom && (
-            <Badge className="bg-amber-600/95 text-white border border-amber-700 shadow-md">
+            <Badge style={{ 
+              backgroundColor: '#d97706', 
+              color: '#ffffff', 
+              borderColor: '#b45309',
+              fontWeight: '600',
+              boxShadow: '0 4px 12px rgba(217, 119, 6, 0.4)'
+            }}>
               🔑 Escape Room Boek
             </Badge>
           )}
           {book.onSale && (
-            <Badge className="bg-fuchsia-600/95 text-white border border-fuchsia-700 shadow-md">
+            <Badge style={{ backgroundColor: '#ffe4e6', color: '#9f1239', borderColor: '#fda4af' }}>
               🎉 SALE
             </Badge>
           )}
@@ -134,15 +142,28 @@ function BookCard({ book, onDetails }: { book: Book; onDetails: (b: Book) => voi
         </Badge>
       </CardHeader>
       <CardContent className="p-4 flex-grow flex flex-col">
-  <CardTitle className={`text-lg mb-2 line-clamp-2 ${book.featuredInEscapeRoom ? 'text-violet-9k now can you give the book card a nicer design to show taht it is in the escape room00' : ''}`}>{book.title}</CardTitle>
+        <CardTitle
+          className={`text-lg mb-2 line-clamp-2 ${
+            book.featuredInEscapeRoom ? 'text-violet-700' : ''
+          }`}
+        >
+          {book.title}
+        </CardTitle>
         <p className="text-sm text-slate-600 mb-1">door {book.author}</p>
-        <p className={`text-sm font-semibold mb-3 ${
-          book.featuredInEscapeRoom 
-            ? 'text-violet-700 text-base' 
-            : book.onSale 
-            ? 'text-rose-700' 
-            : 'text-slate-900'
-        }`}>{formatPrice(book.price)}</p>
+        <div className="mb-3">
+          {book.onSale ? (
+            <div className="flex items-center gap-2">
+              <p className="text-base font-bold" style={{ color: '#dc2626' }}>{formatPrice(book.price * 0.8)}</p>
+              <p className="text-xs text-slate-400" style={{ textDecoration: 'line-through' }}>{formatPrice(book.price)}</p>
+            </div>
+          ) : (
+            <p className={`text-sm font-semibold ${
+              book.featuredInEscapeRoom 
+                ? 'text-violet-700 text-base' 
+                : 'text-slate-900'
+            }`}>{formatPrice(book.price)}</p>
+          )}
+        </div>
         <p className="text-sm text-slate-700 mb-3 line-clamp-3 flex-grow">{book.description}</p>
         <div className="flex flex-wrap gap-1 mb-3">
           {book.tags.slice(0, 3).map((tag, index) => (
